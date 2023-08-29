@@ -1,2 +1,3 @@
 # fixed-term-diary
-A kind of blog site for fixed-term
+This is a kind of blog site.
+It can be used for fixed-term.
