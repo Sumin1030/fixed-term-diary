@@ -7,7 +7,68 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+html, body {
+  position: relative;
+}
+
+ * {
+  width: 100%;
+  height: 100%;
+}
+
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.user {
+  background-color: aqua;
+}
+
+.info {
+  background-color: whitesmoke;
+}
+
+.challenge {
+  background-color: yellow;
+}
+
+.top-post {
+  background-color: black;
+}
+
+.guest-book {
+  background-color: green;
+}
+
+/* .main, .main-right, .main-right-top, .main-right-top-right {
+  display: grid;
+} */
+
+
+.main {
+  display: grid;
+  grid-template-columns: 1fr 2fr 1fr;
+  grid-template-rows: 2fr 1fr;
+}
+
+.main-left {
+  grid-row: 1 / span 2;
+}
+
+.main-bottom {
+  grid-column: 2 / span2;
+}
+
+.main-right {
+  display: grid;
+  grid-template-rows: 1fr 1fr;
+}
+
+/* .main, .main-right-top {
+  flex-direction: row;
+}
+
+.main-right, .main-right-top-right {
+  flex-direction: column;
+} */
