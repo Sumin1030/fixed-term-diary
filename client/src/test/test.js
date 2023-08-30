@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react';
 import Message from './Message';
-function test() {
+function Test() {
     
     const [msg, setMsg] = useState([]);
     const msgVal = useRef(null);
@@ -32,4 +32,4 @@ function test() {
     );
   }
   
-  export default test;
+  export default Test;
