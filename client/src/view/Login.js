@@ -5,20 +5,22 @@ function Login() {
     const sayHi = `Hi. this is fixed-term diary made by Sumin.
     If you want to join us, type(y) in the ID field.`;
     const signUpTxt = `\n Ready to Sign Up.. \n ID must be consist of only alphabet and number. \n And ID must be at least 5 characters.`;
-    const ID = `ID: `;
-    const PW = `PW: `;
-    const NAME = `NAME: `;
-    const MSG = `MESSAGE: `;
-    const ANSWER = `ANSWER: `;
+    const ID = `ID:`;
+    const PW = `PW:`;
+    const NAME = `NAME:`;
+    const MSG = `MESSAGE:`;
+    const ANSWER = `ANSWER:`;
     const currentText = useRef(sayHi);
     const isSignUp = useRef(false);
+    const textBox = useRef(null);
     const [fixedText, setFixedText] = useState(currentText.current);
     const [title, setTitle] = useState(ID);
     
-
     // fixedText 수정
-    const changeCurrentText = (txt) =>{
-        currentText.current += `\n${title + txt}`;
+    const changeCurrentText = (txt, includeTitle = true) =>{
+        let _title = "";
+        if(includeTitle) _title = title;
+        currentText.current += `\n${_title + txt}`;
         setFixedText(currentText.current);
     }
 
@@ -37,14 +39,14 @@ function Login() {
     const signUp = (txt) => {
         if(title == ID) {
             if(txt.length <= 5) {
-                changeCurrentText("id has to be more than 5 letters");
+                changeCurrentText("id has to be more than 5 letters", false);
             } else {
                 id = txt;
                 setTitle(PW);
             }
         } else if(title == PW) {
             if(txt.length <= 8) {
-                changeCurrentText("pw has to be more than 8 letters");
+                changeCurrentText("pw has to be more than 8 letters", false);
             } else {
                 pw = txt;
                 setTitle(NAME);
@@ -53,16 +55,17 @@ function Login() {
             setTitle(MSG);
             name = txt;
         } else if (title == MSG) {
-            setTitle("ANSWER");
+            setTitle(ANSWER);
             msg = txt;
-            changeCurrentText(`****************************\n
-            **                        **\n
-            **   ID: ${id}         **\n
-            **   Password: ${pw}   **\n
-            **   Name: ${name}            **\n
-            **   message: ${msg}    **\n
-            **                        **\n
-            ****************************\nY: yes, R: rewrite, L: login`);
+            changeCurrentText(`****************************
+            **                      **
+            **   ID: ${id}         **
+            **   Password: ${pw}   **
+            **   Name: ${name}            **
+            **   message: ${msg}    **
+            **                        **
+            ****************************
+            Y: yes, R: rewrite, L: login`, false);
         } else if (title == ANSWER) {
             if(txt == "L") {
                 isSignUp.current = false;
@@ -70,9 +73,9 @@ function Login() {
             } else if (txt == "R") {
                 setTitle(ID);
             } else if (txt == "Y") {
-                changeCurrentText("완료");
+                changeCurrentText("완료", false);
             } else {
-                changeCurrentText("wrong answer");
+                changeCurrentText("wrong answer", false);
             }
 
         }
@@ -82,7 +85,7 @@ function Login() {
     const login = (txt) => {
         if(txt == "Y" || txt == "y") {
             isSignUp.current = true;
-            changeCurrentText(signUpTxt);
+            changeCurrentText(signUpTxt, false);
             setTitle(ID);
         } else {
             if(title == ID){
@@ -112,18 +115,28 @@ function Login() {
             e.currentTarget.value = "";
         }
     }
+
+    useEffect(() => {
+        if(textBox.current) {
+            textBox.current.scrollTop = textBox.current.scrollHeight;
+        }
+    }, [fixedText]);
     
 
     return(
         <div className="login">
             <div className="login-prompt">
                 <div className="login-top-bar">
-                    <div className="login-top-bar-buttons"></div>
+                    <div className="login-top-bar-buttons">
+                        <div className="red-button"></div>
+                        <div className="yellow-button"></div>
+                        <div className="green-button"></div>
+                    </div>
                     <div className="login-top-bar-text">
-                        Welcome to Sumin's Page
+                        &#127968; Welcome to Sumin's Page
                     </div>
                 </div>
-                <div className="login-text-box">
+                <div className="login-text-box" ref={textBox}>
                     <div className="written-text">
                         {fixedText}
                     </div>

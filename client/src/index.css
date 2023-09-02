@@ -63,7 +63,7 @@ code {
 
 /* login */
 .login {
-  background-color: rgb(52, 52, 52);
+  background-color: rgb(40, 40, 40);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -75,30 +75,62 @@ code {
   height: 60%;
   min-width: 500px;
   min-height: 300px;
-  border-radius: 3%;
+  border-radius: 2%;
   overflow: hidden;
+  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
 }
 
 .login-top-bar {
-  background-color: rgb(222, 222, 222);
+  background-color: rgb(56, 56, 56);
   width: 100%;
-  height: 25px;
+  height: 28px;
   display: flex;
   flex-direction: row;
 }
 
 .login-top-bar-buttons {
-  width: 90px;
+  width: 60px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;  
+}
+
+.login-top-bar-buttons *{
+  height: 12px;
+  width: 12px;
+  border-radius: 100%;
+  margin-left: 8px;
+}
+
+.red-button {
+  background-color: rgb(235, 100, 100);
+}
+
+.yellow-button {
+  background-color: rgb(255, 197, 73);
+}
+
+.green-button {
+  background-color: rgb(49, 200, 49);
 }
 
 .login-top-bar-text {
-  width: calc(100% - 90px);
+  width: calc(100% - 60px);
+  color: rgb(176, 176, 176);
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  font-size: 11pt;
+  font-weight: bolder;
+  margin-right: 60px;
+  text-align: center;
+  line-height: 28px;
 }
 
 .login-text-box {
-  background-color: rgb(0, 0, 0);
+  background-color: rgb(27, 27, 27);
   width: 100%;
-  height: calc(100% - 25px);
+  height: calc(100% - 28px);
+  padding-left: 10px;
+  overflow: scroll;
 }
 
 .written-text {
@@ -111,9 +143,9 @@ code {
 }
 
 .input-text {
-  height: 25px;
+  height: auto;
   border: none;
-  background-color: black;
+  background-color: rgb(27, 27, 27);
   color: green;
   font-family: 'Courier New', Courier, monospace;
   font-size: 12pt;
@@ -127,14 +159,13 @@ code {
   font-size: 12pt;
   font-weight: bold;
   width: auto;
-  line-height: 25px;
 }
 
 .input-field {
   display: flex;
   flex-direction: row;
   height: 25px;
-  align-items: center;
+  align-items: start;
 }
 
 
