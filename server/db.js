@@ -17,4 +17,12 @@ const test = (callback) => {
     });
 }
 
-module.exports = { test }
+const searchID = (id, callback) => {
+    connection.query(`SELECT * FROM USER WHERE ID = '${id}'`, (err, rows, fields) => {
+        if(err) throw err;
+        console.log("rows : ", rows);
+        callback(rows);
+    })
+}
+
+module.exports = { test, searchID }

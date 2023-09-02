@@ -1,5 +1,6 @@
-import React, { useState, useRef } from 'react';
-let id, pw, name, msg;
+import React, { useState, useRef, useEffect } from 'react';
+import axios from "axios";
+let id, pw, name, msg, loginPw;
 function Login() {
 
     const sayHi = `Hi. this is fixed-term diary made by Sumin.
@@ -89,10 +90,19 @@ function Login() {
             setTitle(ID);
         } else {
             if(title == ID){
-                if(txt != "gjtnals2") {
-                    changeCurrentText("no such ID");
+                if(txt.length > 5) {
+                    const id = txt;
+                    axios.get(`api/getId?id=${id}`).then((res)=>{
+                        console.log("getId 호출 완료 : ", res)
+                        if (res.data.result.length > 0) {
+                            loginPw = res.data.result[0].PW
+                            setTitle(PW);
+                        } else {
+                            changeCurrentText("no such ID", false);
+                        }   
+                    });
                 } else {
-                    setTitle(PW);
+                    changeCurrentText("id has to be more than 5 letters", false);
                 }
             }
         }
@@ -100,10 +110,14 @@ function Login() {
 
     // 비밀번호 확인
     const isValid = (txt) => {
-        if(txt != null && txt != "" && txt == "gjtnals12$") {
-            setFixedText(`${fixedText} \n Ready to start..`);
+        if(txt != null && txt.length > 8) {
+            if(txt == loginPw) {
+                setFixedText(`${fixedText} \n Ready to start..`);
+            } else {
+                setFixedText(`${fixedText} \n Incorrect Password.`);
+            }
         } else {
-            setFixedText(`${fixedText} \n Incorrect Password.`);
+            changeCurrentText("pw has to be more than 8 letters", false);
         }
     }
 
