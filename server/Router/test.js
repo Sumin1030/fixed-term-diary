@@ -17,4 +17,11 @@ router.get('/getID', (req, res) => {
     });
 });
 
+router.post('/signUp', (req, res) => {
+    const info = req.body;
+    db.signUp(info, (result) => {
+        res.send({result});
+    })
+})
+
 module.exports = router;

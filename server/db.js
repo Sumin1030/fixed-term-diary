@@ -20,9 +20,27 @@ const test = (callback) => {
 const searchID = (id, callback) => {
     connection.query(`SELECT * FROM USER WHERE ID = '${id}'`, (err, rows, fields) => {
         if(err) throw err;
-        console.log("rows : ", rows);
         callback(rows);
     })
 }
 
-module.exports = { test, searchID }
+const signUp = (info, callback) => {
+    if(info.id && info.pw && info.name) {
+        info = replaceInfo(info);
+        connection.query(`INSERT INTO USER VALUES ('${info.id}', '${info.pw}', '${info.name}', '${info.msg}')`, (err, rows, fields) => {
+            // if(err) throw err;
+            callback(rows);
+        });
+        
+    } else {
+        // 오류 발생시키기
+    }
+}
+const replaceInfo = (info) => {
+    Object.keys(info).forEach(key => {
+        info[key] = info[key].replaceAll("'", "\\'");
+    });
+    return info;
+}
+
+module.exports = { test, searchID, signUp}

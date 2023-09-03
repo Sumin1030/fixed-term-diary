@@ -1,6 +1,9 @@
 import React, { useState, useRef, useEffect } from 'react';
 import axios from "axios";
-let id, pw, name, msg, loginPw;
+// info: 회원가입 시 정보 저장 위함.
+//       정보 가입할 때 마다 함수 실행하기 때문에 전역변수로 설정.
+// loginPw: 로그인 시 아이디 정보 불러오는 시점에 미리 비밀번호 저장하기 위함.
+let info = {}, loginPw;
 function Login() {
 
     const sayHi = `Hi. this is fixed-term diary made by Sumin.
@@ -42,28 +45,28 @@ function Login() {
             if(txt.length <= 5) {
                 changeCurrentText("id has to be more than 5 letters", false);
             } else {
-                id = txt;
+                info.id = txt;
                 setTitle(PW);
             }
         } else if(title == PW) {
             if(txt.length <= 8) {
                 changeCurrentText("pw has to be more than 8 letters", false);
             } else {
-                pw = txt;
+                info.pw = txt;
                 setTitle(NAME);
             }
         } else if(title == NAME) {
             setTitle(MSG);
-            name = txt;
+            info.name = txt;
         } else if (title == MSG) {
             setTitle(ANSWER);
-            msg = txt;
+            info.msg = txt;
             changeCurrentText(`****************************
             **                      **
-            **   ID: ${id}         **
-            **   Password: ${pw}   **
-            **   Name: ${name}            **
-            **   message: ${msg}    **
+            **   ID: ${info.id}         **
+            **   Password: ${info.pw}   **
+            **   Name: ${info.name}            **
+            **   message: ${info.msg}    **
             **                        **
             ****************************
             Y: yes, R: rewrite, L: login`, false);
@@ -74,7 +77,16 @@ function Login() {
             } else if (txt == "R") {
                 setTitle(ID);
             } else if (txt == "Y") {
-                changeCurrentText("완료", false);
+                axios.post(`/api/signUp`, info).then((res)=>{
+                    if(res.data.result) {
+                        isSignUp.current = false;
+                        changeCurrentText("성공! 로그인하십시오.", false);
+                    } else {
+                        changeCurrentText("오류. 다시 시도하십시오.", false);
+                    }
+                    setTitle(ID);
+                    
+                });
             } else {
                 changeCurrentText("wrong answer", false);
             }
@@ -92,8 +104,7 @@ function Login() {
             if(title == ID){
                 if(txt.length > 5) {
                     const id = txt;
-                    axios.get(`api/getId?id=${id}`).then((res)=>{
-                        console.log("getId 호출 완료 : ", res)
+                    axios.get(`/api/getId?id=${id}`).then((res)=>{
                         if (res.data.result.length > 0) {
                             loginPw = res.data.result[0].PW
                             setTitle(PW);

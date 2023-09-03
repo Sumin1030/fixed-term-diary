@@ -27,15 +27,15 @@ import axios from "axios";
 import { useEffect } from 'react';
 
 function App() {
-  console.log("client.app.js");
-  const callApi = async()=>{
-    axios.get("/api").then((res)=>{console.log("app.js call api callback : ", res.data.result)});
-  };
+  // const callApi = ()=>{
+  //   axios.get("/api").then((res)=>{console.log("app.js call get api callback : ", res.data.result)});
+  //   axios.post("/api").then((res)=>{console.log("app.js call post api callback : ", res.data.result)});
+  // };
 
   // 두 번째 인자에 빈 배열로 넣으면 처음 렌더링 시에만 함수 호출됨.
-  useEffect(()=>{
-    callApi();
-  }, []);
+  // useEffect(()=>{
+  //   callApi();
+  // }, []);
   
   return (
     <div className="App">
