@@ -4,7 +4,7 @@ import axios from "axios";
 //       정보 가입할 때 마다 함수 실행하기 때문에 전역변수로 설정.
 // loginPw: 로그인 시 아이디 정보 불러오는 시점에 미리 비밀번호 저장하기 위함.
 let info = {}, loginPw;
-function Login() {
+function Login(props) {
 
     const sayHi = `Hi. this is fixed-term diary made by Sumin.
     If you want to join us, type(y) in the ID field.`;
@@ -106,8 +106,8 @@ function Login() {
                     const id = txt;
                     axios.get(`/api/getId?id=${id}`).then((res)=>{
                         if (res.data.result.length > 0) {
-                            loginPw = res.data.result[0].PW
                             setTitle(PW);
+                            loginPw = res.data.result[0].PW;
                         } else {
                             changeCurrentText("no such ID", false);
                         }   
@@ -124,6 +124,7 @@ function Login() {
         if(txt != null && txt.length > 8) {
             if(txt == loginPw) {
                 setFixedText(`${fixedText} \n Ready to start..`);
+                props.changeState(true);
             } else {
                 setFixedText(`${fixedText} \n Incorrect Password.`);
             }

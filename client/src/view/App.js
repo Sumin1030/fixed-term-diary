@@ -23,8 +23,11 @@
 // }
 
 // export default App;
-import axios from "axios";
-import { useEffect } from 'react';
+// import axios from "axios";
+// import { useEffect } from 'react';
+import { useState } from 'react';
+import MainPage from './MainPage';
+import Login from './Login';
 
 function App() {
   // const callApi = ()=>{
@@ -36,11 +39,14 @@ function App() {
   // useEffect(()=>{
   //   callApi();
   // }, []);
+
+  const [isLogined, setIsLogined] = useState(false);
+  const changeLoginState = (state) => {
+    setIsLogined(state);
+  }
   
-  return (
-    <div className="App">
-    </div>
-  );
+  if(isLogined) return <MainPage />;
+  else return <Login changeState={changeLoginState} />;
 }
 
 export default App;
