@@ -38,7 +38,7 @@ function Info() {
     const [today_s, setToday_s] = useState(new Date(utc - (koreaOffset * 60 * 1000)));
     const [leftTime, setLeftTime] = useState({});
   
-    const lastDay = new Date(2023, 8, 10);
+    const lastDay = new Date(2024, 7, 14);
     // 마지막 날짜에서 offset을 더해 표준시 기준으로 만듦.
     const lastDay_utc = lastDay.getTime() + (lastDay.getTimezoneOffset() * 60 * 1000);;
     const updateLeftTime = () => {
