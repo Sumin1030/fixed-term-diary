@@ -1,9 +1,11 @@
 import React, { useState, useRef, useEffect } from 'react';
-import axios from "axios";
+import axios from 'axios';
+import dateUtil from '../util/dateUtil';
 // info: 회원가입 시 정보 저장 위함.
 //       정보 가입할 때 마다 함수 실행하기 때문에 전역변수로 설정.
 // loginPw: 로그인 시 아이디 정보 불러오는 시점에 미리 비밀번호 저장하기 위함.
-let info = {}, loginPw;
+// loginId: 로그인 성공 시 방문자 수 기록하기 위함
+let info = {}, loginId, loginPw;
 function Login(props) {
 
     const sayHi = `Hi. this is fixed-term diary made by Sumin.
@@ -38,6 +40,17 @@ function Login(props) {
         } else if(title == PW) {
             isValid(txt)
         }
+    }
+
+    // 방문자 수 올리기
+    const addVisit = (info) => {
+        axios.post(`/api/addVisit`, info).then((res)=>{
+            if(res.data.result) {
+                console.log("addVisit 성공 : ", res.data.result);
+            } else {
+                console.log("addVisit 실패 ");
+            }
+        });
     }
     
     const signUp = (txt) => {
@@ -103,8 +116,8 @@ function Login(props) {
         } else {
             if(title == ID){
                 if(txt.length > 5) {
-                    const id = txt;
-                    axios.get(`/api/getId?id=${id}`).then((res)=>{
+                    loginId = txt;
+                    axios.get(`/api/getId?id=${loginId}`).then((res)=>{
                         if (res.data.result.length > 0) {
                             setTitle(PW);
                             loginPw = res.data.result[0].PW;
@@ -123,6 +136,13 @@ function Login(props) {
     const isValid = (txt) => {
         if(txt != null && txt.length > 8) {
             if(txt == loginPw) {
+                const currTime = new Date();
+                const date = dateUtil.getDate(new Date(currTime.getTime() + (currTime.getTimezoneOffset() * 60 * 1000)), "desc");
+                const info = {
+                    id: loginId,
+                    date: date
+                }
+                addVisit(info);
                 setFixedText(`${fixedText} \n Ready to start..`);
                 props.changeState(true);
             } else {
@@ -143,6 +163,7 @@ function Login(props) {
     }
 
     useEffect(() => {
+        // 스크롤이 생겼을 때 사용자가 새로운 값을 입력하면 스크롤을 맨 아래로 내림.
         if(textBox.current) {
             textBox.current.scrollTop = textBox.current.scrollHeight;
         }

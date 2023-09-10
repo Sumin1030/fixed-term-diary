@@ -47,6 +47,7 @@ function App() {
   
   if(isLogined) return <MainPage />;
   else return <Login changeState={changeLoginState} />;
+  // return <MainPage />
 }
 
 export default App;

@@ -22,6 +22,20 @@ router.post('/signUp', (req, res) => {
     db.signUp(info, (result) => {
         res.send({result});
     })
-})
+});
+
+router.post(`/addVisit`, (req, res) => {
+    const info = req.body;
+    db.insertVisit(info, (result) => {
+        res.send({result});
+    })
+});
+
+router.get('/getVisits', (req, res) => {
+    const today = req.query.today;
+    db.getVisits(today, (result) => {
+        res.send({result});
+    });
+});
 
 module.exports = router;
