@@ -1,0 +1,357 @@
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+html, body {
+  position: relative;
+}
+
+*:not(table, table *, .calender) {
+  width: 100%;
+  height: 100%;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+.main {
+  background-color: black;
+}
+
+/* info */
+.info {
+  display: flex;
+  flex-direction: column;
+  font-family: 'Courier New', Courier, monospace;
+  color: gray;
+  width: calc(100% - 20px);
+  height: calc(100% - 20px);
+  margin: 10px;
+}
+
+.info-time {
+  height: 40%;
+}
+
+.visitor, .grass {
+  height: 30%;
+}
+
+.grass {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.curr-time {
+  height: 65%;
+}
+
+.curr-time>* {
+  padding : 10px;
+  width: calc(100% - 20px);
+  height: calc(50% - 20px);
+  display: flex;
+  flex-direction: column;
+  justify-content:space-around;
+}
+
+.left-time, .curr-time>*, .visitor, .grass {
+  border-top: 0.1px solid gray;
+}
+
+.seoul-time>*, .toronto-time>* {
+  height: 50%;
+}
+
+.left-time {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding : 10px;
+  width: calc(100% - 20px);
+  height: calc(35% - 20px);
+}
+
+.left-time>* {
+  height: 50%;
+}
+
+.left-time-time {
+  display: flex;
+  flex-direction: row;
+}
+
+.left-time-time>* {
+  padding-right: 10px;
+}
+
+.left-day, .left-time-text {
+  color: green;
+  font-weight: 500;
+  font-size: 3.5rem;
+  width: auto;
+}
+
+.left-hour {
+  font-size: 1.5rem;
+  width: auto;
+  color: rgb(251, 0, 255);
+  text-align: center;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+}
+
+.time-title {
+  color: rgb(77, 77, 77);
+  font-weight: bold;
+  font-size: 2rem;
+  display: flex;
+  align-items: center;
+}
+
+.today-time {
+  color: gray;
+  font-size: 2.5rem;
+  font-weight: normal;
+}
+
+/* each page in MainPage.js */
+.user {
+  background-color: aqua;
+}
+
+.challenge {
+  background-color: yellow;
+}
+
+.top-post {
+  background-color: black;
+}
+
+.guest-book {
+  background-color: green;
+}
+
+/* MainPage */
+.main {
+  display: grid;
+  grid-template-columns: 1.3fr 1.2fr 1.3fr;
+  grid-template-rows: 2fr 1fr;
+}
+
+.main-left {
+  grid-row: 1 / span 2;
+  overflow: hidden;
+}
+
+.main-bottom {
+  grid-column: 2 / span2;
+}
+
+.main-right {
+  display: grid;
+  grid-template-rows: 1.5fr 1fr;
+}
+
+/* login */
+.login {
+  background-color: rgb(40, 40, 40);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.login-prompt {
+  background-color: white;
+  width: 60%;
+  height: 60%;
+  min-width: 500px;
+  min-height: 300px;
+  border-radius: 2%;
+  overflow: hidden;
+  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+}
+
+.login-top-bar {
+  background-color: rgb(56, 56, 56);
+  width: 100%;
+  height: 28px;
+  display: flex;
+  flex-direction: row;
+}
+
+.login-top-bar-buttons {
+  width: 60px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;  
+}
+
+.login-top-bar-buttons *{
+  height: 12px;
+  width: 12px;
+  border-radius: 100%;
+  margin-left: 8px;
+}
+
+.red-button {
+  background-color: rgb(235, 100, 100);
+}
+
+.yellow-button {
+  background-color: rgb(255, 197, 73);
+}
+
+.green-button {
+  background-color: rgb(49, 200, 49);
+}
+
+.login-top-bar-text {
+  width: calc(100% - 60px);
+  color: rgb(176, 176, 176);
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  font-size: 11pt;
+  font-weight: bolder;
+  margin-right: 60px;
+  text-align: center;
+  line-height: 28px;
+}
+
+.login-text-box {
+  background-color: rgb(27, 27, 27);
+  width: 100%;
+  height: calc(100% - 28px);
+  padding-left: 10px;
+  overflow: scroll;
+}
+
+.written-text {
+  height: auto;
+  color: green;
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 12pt;
+  font-weight: bold;
+  white-space: pre-line;
+}
+
+.input-text {
+  height: auto;
+  border: none;
+  background-color: rgb(27, 27, 27);
+  color: green;
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 12pt;
+  font-weight: bold;
+  padding: 0;
+}
+
+.title {
+  color: green;
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 12pt;
+  font-weight: bold;
+  width: auto;
+}
+
+.input-field {
+  display: flex;
+  flex-direction: row;
+  height: 25px;
+  align-items: start;
+}
+
+
+/* label */
+.label {
+  font-family: 'Courier New', Courier, monospace;
+}
+
+/* Calendar */
+.calendar {
+  /* overflow: scroll; */
+  height: auto;
+  width: auto;
+}
+.calendar table {
+  border-spacing: 6px;
+  /* width: max-content; */
+}
+
+.calendar .td.date {
+  background-color: rgb(59, 59, 59);
+}
+
+.calendar .tbody .tr {
+  height: 11px;
+}
+
+.calendar .thead .tr {
+  height: 25px;
+}
+
+.calendar .thead .td, .calendar .tbody .td {
+  width: 11px;
+  padding: 0;
+}
+
+.calendar .tbody .td.first {
+  width: 40px;
+}
+
+.calendar .tbody .day {
+  position: absolute;
+}
+
+.calendar .thead .month {
+  position: absolute;
+  /* width: 30px; */
+}
+
+.calendar-tooltip {
+  visibility: hidden;
+  position: absolute;
+  background-color: rgb(58, 58, 58);
+  color: white;
+  font-size: 13pt;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  font-weight: normal;
+  padding: 7px;
+  border-radius: 7px;
+  text-align: center;
+  margin-left: -150px;
+  margin-top: -50px;
+}
+
+.calendar-tooltip.left {
+  margin-left: -90px;
+}
+
+.calendar-tooltip.left::after {
+  left: 29%;
+}
+
+.calendar-tooltip::after {
+  position: absolute;       /* 절대 위치 사용 */
+  border-style: solid;
+  border-width: 8px;
+  content: " ";
+  border-color: rgb(58, 58, 58) transparent transparent transparent;
+  top: 100%;
+  left: 50%;
+}
+
+.calendar .td.date:hover .calendar-tooltip{
+  visibility: visible;
+}
+
+
+
