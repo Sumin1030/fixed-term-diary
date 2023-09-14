@@ -1,8 +1,6 @@
 import DateUtil from '../util/DateUtil';
 
 function Calendar() {
-    console.log("calender");
-    
     const today = new Date();
     const end = new Date(today.getFullYear(), today.getMonth(), today.getDate());
     // const end_day = end.getDay();
@@ -10,8 +8,18 @@ function Calendar() {
     const start_day = start.getDay();
     const totalDay = (end - start + 1) / DateUtil.DAY_TO_MILLISECONDS;
 
+    // ******** 설정사항 - row 수, 라벨 표시 방법, 색상
+    const isMonthLabelNum = true;
+    const isDayLabelShort = false;
+    // 블로그 잔디 기준 및 색상 설정
+    const levelOfContribution = [0, 5, 8, 9];
+    // 흰색 계열
+    // const levelOfColor = ['rgb(50, 50, 50)', 'rgb(85, 85, 85)', 'rgb(125, 125, 125)', 'rgb(160, 160, 160)', 'rgb(200, 200, 200)'];
+    // 초록 계열
+    const levelOfColor = ['rgb(50, 50, 50)', 'rgb(0, 64, 0);', 'rgb(0, 115, 0)', 'rgb(0, 198, 0)', 'rgb(0, 255, 0)'];
+
     // row 는 고정
-    const numOfRow = DateUtil.DAYS.length * 2;
+    const numOfRow = DateUtil.DAYS.length;
 
     // 첫 주 일수 구하기
     const dayOfFirstWeek = numOfRow - start_day;
@@ -22,9 +30,6 @@ function Calendar() {
     // 마지막 주 일수 구하기
     const dayOfLastWeek = (totalDay - dayOfFirstWeek) % numOfRow;
 
-    // 블로그 잔디 기준 및 색상 설정
-    const levelOfContribution = [0, 5, 8, 9];
-    const levelOfColor = ['rgb(50, 50, 50)', 'rgb(85, 85, 85)', 'rgb(125, 125, 125)', 'rgb(160, 160, 160)', 'rgb(200, 200, 200)'];
     const setColor = (num) => {
         let color = levelOfColor[0];
         if(num >= levelOfContribution[0] && num < levelOfContribution[1]) color = levelOfColor[1];
@@ -55,8 +60,10 @@ function Calendar() {
                 let td;
                 if(i == 0) {
                     // 월, 수, 금만 표시
-                    if(j%2 == 1) td = <td className='td first day' idx={`${i}`} key={`${i}`}>{DateUtil.DAYS[j%DateUtil.DAYS.length]}</td>;
-                    else td = <td className='td first' key={`${i}`}></td>;
+                    if(j%2 == 1) {
+                        const label = isDayLabelShort? DateUtil.DAYS_INITIAL[j%DateUtil.DAYS_INITIAL.length] : DateUtil.DAYS[j%DateUtil.DAYS.length];
+                        td = <td className='td first day' idx={`${i}`} key={`${i}`}>{label}</td>
+                    } else td = <td className='td first' key={`${i}`}></td>;
                 } else {
                     // thead 월 표시 위함
                     const thisMonth = _today.getMonth();
@@ -100,7 +107,8 @@ function Calendar() {
             if (i == 0) td = <td className='td first' key={`${i}`}></td>;
             else if (monthLoc[monthIdx].idx == i) {
                 // 월 표시 라벨은 해당 월에 해당하는 만큼 colspan으로 넓혀주기 -> 화면 크기에 맞춰 수정했으므로 주석처리함.
-                content = DateUtil.MONTHS[monthLoc[monthIdx].month];
+                if(isMonthLabelNum)content = monthLoc[monthIdx].month + 1;
+                else content = DateUtil.MONTHS[monthLoc[monthIdx].month];
                 // const colspan = monthIdx < monthLoc.length - 1? monthLoc[monthIdx+1].idx - i : numOfCol - i;
                 // td = <td className='td month' colSpan={colspan} idx={`${monthIdx+1}`} key={`${monthIdx+1}`}>{content}</td>;
                 td = <td className='td month' idx={`${i}`} key={`${i}`}>{content}</td>;

@@ -1,9 +1,9 @@
 function Construction() {
     return (
         <div className="construction">
-            <p1>UNDER CONSTRUCTION</p1>
+            <div>UNDER CONSTRUCTION</div>
             <br/>
-            <p3>comming soon,,</p3>
+            <div>comming soon,,</div>
         </div>
     );
 }

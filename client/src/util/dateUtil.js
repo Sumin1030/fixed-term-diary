@@ -2,6 +2,9 @@ export default {
     get DAYS() {
         return ['Sun', 'Mon', 'Tue', 'Wen', 'Thur', 'Fri', 'Sat'];
     },
+    get DAYS_INITIAL() {
+        return ['SU', 'M', 'TU', 'W', 'TH', 'F', 'SA'];
+    },
     get MONTHS() {
         return ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
     },

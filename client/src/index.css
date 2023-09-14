@@ -39,6 +39,11 @@ code {
 
 .construction * {
   height: auto;
+  color: rgb(0, 255, 0);
+  color: rgb(0, 198, 0);
+  color: rgb(0, 115, 0);
+  color: rgb(0, 64, 0);
+  color: rgb(46, 54, 46);
 }
 
 /* info */
@@ -307,7 +312,7 @@ code {
 }
 
 .calendar .tbody .tr {
-  height: 11px;
+  height: 5px;
 }
 
 .calendar .thead .tr {
@@ -315,7 +320,7 @@ code {
 }
 
 .calendar .thead .td, .calendar .tbody .td {
-  width: 11px;
+  width: 5px;
   padding: 0;
 }
 
