@@ -1,7 +1,10 @@
+import Construction from "../component/Construction";
 function TopPost() {
 
     return(
-        <div className="top-post"></div>
+        <div className="top-post">
+            <Construction />
+        </div>
     )
 }
 

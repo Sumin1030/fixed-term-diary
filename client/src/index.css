@@ -25,6 +25,22 @@ code {
   background-color: black;
 }
 
+/* construction */
+.construction {
+  font-size: 20pt;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background-color: rgb(14, 14, 14);
+  color: rgb(118, 118, 118);
+  border: 10px solid black;
+}
+
+.construction * {
+  height: auto;
+}
+
 /* info */
 .info {
   display: flex;
@@ -125,7 +141,7 @@ code {
 }
 
 /* each page in MainPage.js */
-.user {
+/* .user {
   background-color: aqua;
 }
 
@@ -139,7 +155,7 @@ code {
 
 .guest-book {
   background-color: green;
-}
+} */
 
 /* MainPage */
 .main {
