@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import axios from 'axios';
-import dateUtil from '../util/dateUtil';
+import DateUtil from '../util/DateUtil';
 // info: 회원가입 시 정보 저장 위함.
 //       정보 가입할 때 마다 함수 실행하기 때문에 전역변수로 설정.
 // loginPw: 로그인 시 아이디 정보 불러오는 시점에 미리 비밀번호 저장하기 위함.
@@ -137,7 +137,7 @@ function Login(props) {
         if(txt != null && txt.length > 8) {
             if(txt == loginPw) {
                 const currTime = new Date();
-                const date = dateUtil.getDate(new Date(currTime.getTime() + (currTime.getTimezoneOffset() * 60 * 1000)), "desc");
+                const date = DateUtil.getDate(new Date(currTime.getTime() + (currTime.getTimezoneOffset() * 60 * 1000)), "desc");
                 const info = {
                     id: loginId,
                     date: date

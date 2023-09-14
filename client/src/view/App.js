@@ -28,6 +28,7 @@
 import { useState } from 'react';
 import MainPage from './MainPage';
 import Login from './Login';
+import Calander from '../component/Calendar';
 
 function App() {
   // const callApi = ()=>{
@@ -45,9 +46,10 @@ function App() {
     setIsLogined(state);
   }
   
-  if(isLogined) return <MainPage />;
-  else return <Login changeState={changeLoginState} />;
-  // return <MainPage />
+  // if(isLogined) return <MainPage />;
+  // else return <Login changeState={changeLoginState} />;
+  return <MainPage />
+  // return <Calander />
 }
 
 export default App;

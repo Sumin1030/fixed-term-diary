@@ -11,7 +11,7 @@ html, body {
   position: relative;
 }
 
- * {
+*:not(table, table *, .calender) {
   width: 100%;
   height: 100%;
 }
@@ -42,6 +42,12 @@ code {
 
 .visitor, .grass {
   height: 30%;
+}
+
+.grass {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .curr-time {
@@ -144,6 +150,7 @@ code {
 
 .main-left {
   grid-row: 1 / span 2;
+  overflow: hidden;
 }
 
 .main-bottom {
@@ -267,5 +274,84 @@ code {
 .label {
   font-family: 'Courier New', Courier, monospace;
 }
+
+/* Calendar */
+.calendar {
+  /* overflow: scroll; */
+  height: auto;
+  width: auto;
+}
+.calendar table {
+  border-spacing: 6px;
+  /* width: max-content; */
+}
+
+.calendar .td.date {
+  background-color: rgb(59, 59, 59);
+}
+
+.calendar .tbody .tr {
+  height: 11px;
+}
+
+.calendar .thead .tr {
+  height: 25px;
+}
+
+.calendar .thead .td, .calendar .tbody .td {
+  width: 11px;
+  padding: 0;
+}
+
+.calendar .tbody .td.first {
+  width: 40px;
+}
+
+.calendar .tbody .day {
+  position: absolute;
+}
+
+.calendar .thead .month {
+  position: absolute;
+  /* width: 30px; */
+}
+
+.calendar-tooltip {
+  visibility: hidden;
+  position: absolute;
+  background-color: rgb(58, 58, 58);
+  color: white;
+  font-size: 13pt;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  font-weight: normal;
+  padding: 7px;
+  border-radius: 7px;
+  text-align: center;
+  margin-left: -150px;
+  margin-top: -50px;
+}
+
+.calendar-tooltip.left {
+  margin-left: -90px;
+}
+
+.calendar-tooltip.left::after {
+  left: 29%;
+}
+
+.calendar-tooltip::after {
+  position: absolute;       /* 절대 위치 사용 */
+  border-style: solid;
+  border-width: 8px;
+  content: " ";
+  border-color: rgb(58, 58, 58) transparent transparent transparent;
+  top: 100%;
+  left: 50%;
+}
+
+.calendar .td.date:hover .calendar-tooltip{
+  visibility: visible;
+}
+
 
 
