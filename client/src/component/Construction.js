@@ -1,9 +1,11 @@
 function Construction() {
     return (
-        <div className="construction">
-            <div>UNDER CONSTRUCTION</div>
-            <br/>
-            <div>comming soon,,</div>
+        <div className="construction-outer">
+            <div className="construction-inner">
+                <div>UNDER CONSTRUCTION</div>
+                <br/>
+                <div>comming soon,,</div>
+            </div>
         </div>
     );
 }

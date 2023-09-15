@@ -10,13 +10,13 @@ function Calendar() {
 
     // ******** 설정사항 - row 수, 라벨 표시 방법, 색상
     const isMonthLabelNum = true;
-    const isDayLabelShort = false;
+    const isDayLabelShort = true; // 바꾸면 .first width 수정 필요
     // 블로그 잔디 기준 및 색상 설정
     const levelOfContribution = [0, 5, 8, 9];
     // 흰색 계열
     // const levelOfColor = ['rgb(50, 50, 50)', 'rgb(85, 85, 85)', 'rgb(125, 125, 125)', 'rgb(160, 160, 160)', 'rgb(200, 200, 200)'];
     // 초록 계열
-    const levelOfColor = ['rgb(50, 50, 50)', 'rgb(0, 64, 0);', 'rgb(0, 115, 0)', 'rgb(0, 198, 0)', 'rgb(0, 255, 0)'];
+    const levelOfColor = ['rgb(50, 50, 50)', 'rgb(0, 64, 0)', 'rgb(0, 115, 0)', 'rgb(0, 198, 0)', 'rgb(0, 255, 0)'];
 
     // row 는 고정
     const numOfRow = DateUtil.DAYS.length;
@@ -75,7 +75,9 @@ function Calendar() {
                         let contribution = Math.floor(Math.random()*10);
                         if(contribution == 0) contribution = 'No';
                         let tooltipClass = "calendar-tooltip";
-                        if(i < 6) tooltipClass += " left";
+                        if(i < 3) tooltipClass += " left";
+                        else if(i < 6) tooltipClass += " left-2";
+                        else if(i < 20) tooltipClass += " left-3";
                         // 최근 1년에 해당하는 날짜
                         td = <td key={`${i}`} className='td date' idx={`${i}`} date={`${_today.getFullYear()}-${thisMonth+1}-${_today.getDate()}`} style={{backgroundColor: setColor(contribution)}}>
                             <span className={tooltipClass}>{contribution} contributions on {DateUtil.DAYS[_today.getDay()]}, {DateUtil.MONTHS[_today.getMonth()]} {_today.getDate()}, {_today.getFullYear()}</span>

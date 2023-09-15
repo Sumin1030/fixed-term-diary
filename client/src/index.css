@@ -25,8 +25,10 @@ code {
   background-color: black;
 }
 
-/* construction */
-.construction {
+/*
+************* Construction *************
+*/
+.construction-inner {
   font-size: 20pt;
   text-align: center;
   display: flex;
@@ -34,19 +36,23 @@ code {
   justify-content: center;
   background-color: rgb(14, 14, 14);
   color: rgb(118, 118, 118);
-  border: 10px solid black;
 }
 
-.construction * {
+.construction-outer {
+  margin: 10px;
+  width: calc(100% - 20px);
+  height: calc(100% - 20px);
+  background-color: black;
+}
+
+
+.construction-inner * {
   height: auto;
-  color: rgb(0, 255, 0);
-  color: rgb(0, 198, 0);
-  color: rgb(0, 115, 0);
-  color: rgb(0, 64, 0);
-  color: rgb(46, 54, 46);
 }
 
-/* info */
+/*
+****************** Info ******************
+*/
 .info {
   display: flex;
   flex-direction: column;
@@ -55,6 +61,7 @@ code {
   width: calc(100% - 20px);
   height: calc(100% - 20px);
   margin: 10px;
+  background-color: rgb(14, 14, 14);
 }
 
 .info-time {
@@ -162,7 +169,9 @@ code {
   background-color: green;
 } */
 
-/* MainPage */
+/*
+**************** MainPage ****************
+*/
 .main {
   display: grid;
   grid-template-columns: 1.3fr 1.2fr 1.3fr;
@@ -183,7 +192,9 @@ code {
   grid-template-rows: 1.5fr 1fr;
 }
 
-/* login */
+/*
+**************** Login ****************
+*/
 .login {
   background-color: rgb(40, 40, 40);
   display: flex;
@@ -291,19 +302,23 @@ code {
 }
 
 
-/* label */
+/*
+******************* label ******************
+*/
 .label {
   font-family: 'Courier New', Courier, monospace;
 }
 
-/* Calendar */
+/*
+**************** Calendar ****************
+*/
 .calendar {
   /* overflow: scroll; */
   height: auto;
   width: auto;
 }
 .calendar table {
-  border-spacing: 6px;
+  border-spacing: 5.5px;
   /* width: max-content; */
 }
 
@@ -325,7 +340,8 @@ code {
 }
 
 .calendar .tbody .td.first {
-  width: 40px;
+  /* DayLabelShort: true일 때는 35px */
+  width: 20px;
 }
 
 .calendar .tbody .day {
@@ -353,25 +369,74 @@ code {
 }
 
 .calendar-tooltip.left {
+  margin-left: -50px;
+}
+.calendar-tooltip.left-2 {
+  margin-left: -70px;
+}
+.calendar-tooltip.left-3 {
   margin-left: -90px;
 }
 
+/* 칸을 작게 수정하여 화살표 주석처리 */
+/* 
 .calendar-tooltip.left::after {
   left: 29%;
 }
 
 .calendar-tooltip::after {
-  position: absolute;       /* 절대 위치 사용 */
+  position: absolute;       
   border-style: solid;
   border-width: 8px;
   content: " ";
   border-color: rgb(58, 58, 58) transparent transparent transparent;
   top: 100%;
   left: 50%;
-}
+} */
 
 .calendar .td.date:hover .calendar-tooltip{
   visibility: visible;
+}
+
+
+
+
+
+/*
+************* GuestBook *************
+*/
+
+.guest-book-outer {
+  color: gray;
+  padding: 10px;
+  width: calc(100% - 20px);
+  height: calc(100% - 20px);
+  display: flex;
+  flex-direction: column;
+}
+
+.guest-book-inner {
+  /* background-color: white; */
+  background-color: rgb(14, 14, 14);
+  border-top: 0.1px solid gray;
+  /* margin: 10px;
+  width: calc(100% - 20px);
+  height: calc(100% - 20px); */
+
+}
+
+.guest-book-content {
+  width: auto;
+  height: calc(100% - 28px);
+}
+
+.guest-book-input {
+  width: auto;
+  height: 28px;
+}
+/* login input도 적용됨 */
+.input-text:focus {
+  outline: none;
 }
 
 
