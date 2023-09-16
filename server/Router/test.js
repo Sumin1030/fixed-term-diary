@@ -13,7 +13,7 @@ const db = require('./../db')
 router.get('/getID', (req, res) => {
     const id = req.query.id;
     db.searchID(id, (result) => {
-        res.send( {result });
+        res.send( {result});
     });
 });
 
@@ -37,5 +37,19 @@ router.get('/getVisits', (req, res) => {
         res.send({result});
     });
 });
+
+router.get('/getGuestBook', (req, res) => {
+    const today = req.query.today;
+    db.getGuestBook(today, (result) => {
+        res.send({result});
+    });
+});
+
+router.get('/insertGuestBook', (req, res) => {
+    const info = req.body;
+    db.insertGuestBook(info, (result) => {
+        res.send({result});
+    })
+})
 
 module.exports = router;

@@ -49,7 +49,8 @@ export default {
         // 현재 시간에서 offset을 더해서 표준시를 구함
         return _time.getTime() + (_time.getTimezoneOffset() * this.MINUTES_TO_MILLISECONDS);
     },
-    getDate(myDate, sort="asc") {
+    getDate(_myDate, sort="asc", deleteSec=false) {
+        const myDate = this.checkDate_object(_myDate);
         const date = this.timeFormat(myDate.getDate());
         const month = myDate.getMonth();
         const year = myDate.getFullYear();
@@ -58,8 +59,10 @@ export default {
         const sec = this.timeFormat(myDate.getSeconds());
         let fullDate = `${hr}:${min}:${sec} ${date} ${this.MONTHS[month]} ${year}`;
         if(sort != "asc") {
-            fullDate = `${year}-${month+1}-${date} ${hr}:${min}:${sec}`;
+            deleteSec? fullDate = `${year}-${month+1}-${date} ${hr}:${min}` 
+                            : fullDate = `${year}-${month+1}-${date} ${hr}:${min}:${sec}`;
         }
+        
         return fullDate;
     },
     addDate(date, numOfDays) {

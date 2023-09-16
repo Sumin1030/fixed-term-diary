@@ -32,7 +32,6 @@ const connection = mysql.createConnection({
 // const db = createConnectionPool({
   
 // });
-
 const test = (callback) => {
     connection.query('SELECT * FROM test', (err, rows, fields) => {
         if(err) throw err;
@@ -98,4 +97,26 @@ const getVisits = (today, callback) => {
     }
 }
 
-module.exports = { test, searchID, signUp, insertVisit, getVisits }
+const getGuestBook = (today, callback) => {
+    const query = `SELECT USER.NAME, GB.GUEST_BOOK_SQ, GB.DATE, GB.DEPTH, GB.CONTENT, GB.PARENT
+                    FROM GUEST_BOOK AS GB
+                    JOIN USER ON USER.ID = GB.ID
+                    WHERE GB.DATE >= DATE_SUB('${today}', INTERVAL 7 day)`;
+    connection.query(query, (err, rows) => {
+        console.log(rows);
+        callback(rows, err);
+    })
+}
+
+const insertGuestBook = (info, callback) => {
+    if (info.date && info.id && info.depth && info.content) {
+        const query = info.parent? 
+            `INSERT INTO GUEST_BOOK(DATE, ID, DEPTH, CONTENT, PARENT) VALUES ('${info.date}','${info.id}', ${info.depth}, '${info.content}', ${info.parent})`
+            : `INSERT INTO GUEST_BOOK(DATE, ID, DEPTH, CONTENT) VALUES ('${info.date}','${info.id}', ${info.depth}, '${info.content}')`;
+        connection.query(query, (err, rows) => {
+            callback(rows, err);
+        })
+    } else console.log("info 없음");
+}
+
+module.exports = { test, searchID, signUp, insertVisit, getVisits, getGuestBook, insertGuestBook };

@@ -425,9 +425,11 @@ code {
 
 }
 
-.guest-book-content {
+.guest-book-contents {
   width: auto;
   height: calc(100% - 28px);
+  display: flex;
+  flex-direction: column;
 }
 
 .guest-book-input {
@@ -437,6 +439,43 @@ code {
 /* login input도 적용됨 */
 .input-text:focus {
   outline: none;
+}
+
+.guest-book-content {
+  display: flex;
+  flex-direction: row;
+  height: auto;
+}
+.gb-date {
+  width: 125px;
+  margin-right: 8px;
+}
+.gb-depth {
+  width: 20px;
+  display: flex;
+  flex-direction: column;
+}
+.gb-depth * {
+  border-left: 1px solid green;
+  height: 50%;
+  width: 20px;
+}
+.gb-depth.last .gb-depth-bottom {
+  border-left: none;
+}
+.gb-depth.end .gb-depth-bottom {
+  border-top: 1px solid green;
+  margin-right: 5px;
+  width: 7px;
+}
+.gb-name {
+  width: 90px;
+  color: rgb(166, 166, 166);
+}
+.gb-content {
+  width: auto;
+  height: auto;
+  color: green;
 }
 
 
