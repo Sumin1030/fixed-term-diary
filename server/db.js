@@ -96,14 +96,21 @@ const getVisits = (today, callback) => {
         });
     }
 }
-
-const getGuestBook = (today, callback) => {
-    const query = `SELECT USER.NAME, GB.GUEST_BOOK_SQ, GB.DATE, GB.DEPTH, GB.CONTENT, GB.PARENT
+/*
+                    SELECT USER.NAME, GB.GUEST_BOOK_SQ, GB.DATE, GB.DEPTH, GB.CONTENT, GB.PARENT, GB.GRAND_PARENT
                     FROM GUEST_BOOK AS GB
                     JOIN USER ON USER.ID = GB.ID
-                    WHERE GB.DATE >= DATE_SUB('${today}', INTERVAL 7 day)`;
+                    WHERE GB.DATE >= DATE_SUB('${today}', INTERVAL 7 day)
+                    ORDER BY GRAND_PARENT, DEPTH, DATE
+*/ 
+const getGuestBook = (today, callback) => {
+    const query = `
+                    SELECT USER.NAME, GB.GUEST_BOOK_SQ, GB.DATE, GB.DEPTH, GB.CONTENT, GB.PARENT, GB.GRAND_PARENT
+                    FROM GUEST_BOOK AS GB
+                    JOIN USER ON USER.ID = GB.ID
+                    ORDER BY GRAND_PARENT, DEPTH, DATE
+                `;
     connection.query(query, (err, rows) => {
-        console.log(rows);
         callback(rows, err);
     })
 }

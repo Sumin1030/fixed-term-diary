@@ -9,30 +9,40 @@ function GuestBook() {
     const [contents, setContents] = useState([]);
 
     const sortContents = (contents) => {
-        // 같은 depth끼리 모으기
-        let _contents = [[]];
-        contents.forEach((content) => {
-            if(!_contents[content.DEPTH]) _contents[content.DEPTH] = [];
-            _contents[content.DEPTH].push(content);
-        });
-        _contents.forEach((content) => {
-            content[content.length-1].LAST = true;
-        });
-        let result = [];
-        for(let i = 0; i < _contents[0].length; i++) {
-            const depth0 = _contents[0][i];
-            result[depth0.GUEST_BOOK_SQ] = [];
-            result[depth0.GUEST_BOOK_SQ].push(depth0);
+        let _contents = [];
+        let lastGrandParent;
+        let GPindex = -1;
+        // 순서대로 정렬하기 위해 depth 0 을 index 0으로 하는 2차배열 생성
+        for(let i = 0; i < contents.length; i++) {
+            const content = contents[i];
+            if(content.DEPTH > 0 && (i+1 == contents.length || (contents[i+1].DEPTH != content.DEPTH))) content.LAST = true;
+            if(lastGrandParent != content.GRAND_PARENT) GPindex++; 
+            if(!_contents[GPindex]) {
+                // 새로운 granparent 맨 처음 생성, 데이터 삽입
+                _contents[GPindex] = [];
+                _contents[GPindex].push(content);
+            } else {
+                // depth 1 부터는 거꾸로 탐색하며 정렬
+                let length = _contents[GPindex].length-1;
+                let last;
+                for(let j = length; j >= 0; j--) {
+                    last = _contents[GPindex][j];
+                    if(last.GUEST_BOOK_SQ == content.PARENT) {
+                        // depth는 더 깊지만 부모가 더 위에 있으면 부모 바로 아래로 끼워넣기
+                        _contents[GPindex].splice(j+1, 0, content);
+                        break;
+                    } else if(last.DEPTH == content.DEPTH) {
+                        // depth가 같으면 순서대로
+                        _contents[GPindex].splice(j+1, 0, content);
+                        break;
+                    }
+                }
+            }
+            lastGrandParent = content.GRAND_PARENT;
         }
-        for(let i = 1; i < _contents.length; i++) {
-            const contents = _contents[i];
-            contents.forEach((content) => {
-                result[content.PARENT].push(content);
-            });
-            
-        }
-        console.log(result);
-        return result;
+        _contents[_contents.length-1][0].LAST = true;
+        console.log(_contents);
+        return _contents;
     }
 
     const getContent = () => {
@@ -46,10 +56,11 @@ function GuestBook() {
                 result = sortContents(result);
                 let key = 0;
                 result.forEach((contents) => {
+                    let last = {};
                     for(let i = 0; i < contents.length; i++) {
                         const content = contents[i];
-                        content.LAST ? resultArr.push(<GuestBookContent info={content} key={key++} last/>) : resultArr.push(<GuestBookContent info={content} key={key++}/>);
-                        
+                        if(content.LAST) last[`${content.DEPTH}`] = true;
+                        resultArr.push(<GuestBookContent info={content} key={key++} last={{...last}}/>);
                     }
                 })
                 setContents(resultArr);

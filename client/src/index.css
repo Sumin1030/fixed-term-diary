@@ -26,7 +26,7 @@ code {
 }
 
 /*
-************* Construction *************
+************* Construction ***************
 */
 .construction-inner {
   font-size: 20pt;
@@ -447,7 +447,7 @@ code {
   height: auto;
 }
 .gb-date {
-  width: 125px;
+  width: 130px;
   margin-right: 8px;
 }
 .gb-depth {
@@ -463,13 +463,17 @@ code {
 .gb-depth.last .gb-depth-bottom {
   border-left: none;
 }
+.gb-depth.last:not(.end) * {
+  border-left: none;
+}
 .gb-depth.end .gb-depth-bottom {
   border-top: 1px solid green;
   margin-right: 5px;
   width: 7px;
 }
 .gb-name {
-  width: 90px;
+  width: auto;
+  margin-right: 10px;
   color: rgb(166, 166, 166);
 }
 .gb-content {

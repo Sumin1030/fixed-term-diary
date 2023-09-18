@@ -8,12 +8,11 @@ function GuestBookContent(props) {
         const depthArr = [];
         for(let i = 0; i < depth; i++) {
             let comp;
-            if(props.last) {
-                comp = (i == depth-1)? <Depth key={i} depth={i} end last /> : <Depth key={i} depth={i} last/>;
+            if(i == depth-1) {
+                comp = (props.last[`${i}`])? <Depth key={i} depth={i} end last /> : <Depth key={i} depth={i} end/>;
             } else {
-                comp = (i == depth-1)? <Depth key={i} depth={i} end /> : <Depth key={i} depth={i} />;
+                comp = (props.last[`${i}`])? <Depth key={i} depth={i} last/> : <Depth key={i} depth={i} />;
             }
-            
             depthArr.push(comp);
         }
         return depthArr;
@@ -23,7 +22,7 @@ function GuestBookContent(props) {
         <div className='guest-book-content'>
             <div className='gb-date'>{date}</div>
             {getDepth(props.info.DEPTH+1)}
-            <div className='gb-name'>{props.info.NAME}</div>
+            <div className='gb-name'>{props.info.NAME} / </div>
             <div className='gb-content'>{props.info.CONTENT}</div>
         </div>
     );
