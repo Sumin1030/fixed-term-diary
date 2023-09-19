@@ -191,7 +191,7 @@ function Login(props) {
                         <span className="title">
                             {title}
                         </span>
-                        <input type="text" className="input-text" onKeyDown={handleOnKeyPress}></input>
+                        <input type="text" className="input-text" onKeyDown={handleOnKeyPress} autoFocus></input>
                     </div>
                 </div>
             </div>

@@ -8,31 +8,12 @@ const connection = mysql.createConnection({
     password: 'typuz123',
     port: 3306,
     database: 'ftd',
-    onQueryStart: (_query, {text, values}) => {
-        console.log(
-          `${new Date().toISOString()} START QUERY ${text} - ${JSON.stringify(
-            values,
-          )}`,
-        );
-      },
-      onQueryResults: (_query, {text}, results) => {
-        console.log(
-          `${new Date().toISOString()} END QUERY   ${text} - ${
-            results.length
-          } results`,
-        );
-      },
-      onQueryError: (_query, {text}, err) => {
-        console.log(
-          `${new Date().toISOString()} ERROR QUERY ${text} - ${err.message}`,
-        );
-      }
+    multipleStatements : true
 }); 
 
 // const db = createConnectionPool({
   
 // });
-
 const test = (callback) => {
     connection.query('SELECT * FROM test', (err, rows, fields) => {
         if(err) throw err;
@@ -97,5 +78,40 @@ const getVisits = (today, callback) => {
         });
     }
 }
+/*
+                    SELECT USER.NAME, GB.GUEST_BOOK_SQ, GB.DATE, GB.DEPTH, GB.CONTENT, GB.PARENT, GB.GRAND_PARENT
+                    FROM GUEST_BOOK AS GB
+                    JOIN USER ON USER.ID = GB.ID
+                    WHERE GB.DATE >= DATE_SUB('${today}', INTERVAL 7 day)
+                    ORDER BY GRAND_PARENT, DEPTH, DATE
+*/ 
+const getGuestBook = (today, callback) => {
+    const query = `
+                    SELECT USER.NAME, GB.GUEST_BOOK_SQ, GB.DATE, GB.DEPTH, GB.CONTENT, GB.PARENT, GB.GRAND_PARENT
+                    FROM GUEST_BOOK AS GB
+                    JOIN USER ON USER.ID = GB.ID
+                    ORDER BY GRAND_PARENT, DEPTH, DATE
+                `;
+    console.log(query);
+    connection.query(query, (err, rows) => {
+        callback(rows, err);
+    })
+}
 
-module.exports = { test, searchID, signUp, insertVisit, getVisits }
+const insertGuestBook = (info, callback) => {
+    if (info) {
+        const query = info.parent? 
+            `INSERT INTO GUEST_BOOK(GUEST_BOOK_SQ, DATE, ID, DEPTH, CONTENT, GRAND_PARENT, PARENT)
+            VALUES ('${info.sq}', '${info.date}','${info.id}', ${info.depth}, '${info.content}', '${info.grandParent}', '${info.parent}');`
+            :
+            `INSERT INTO GUEST_BOOK(GUEST_BOOK_SQ, DATE, ID, DEPTH, CONTENT, GRAND_PARENT)
+            VALUES ('${info.sq}', '${info.date}','${info.id}', ${info.depth}, '${info.content}', '${info.grandParent}');`;
+        console.log(query);
+        connection.query(query, (err, rows) => {
+            console.log(err, rows);
+            callback(rows, err);
+        })
+    } else console.log("info 없음");
+}
+
+module.exports = { test, searchID, signUp, insertVisit, getVisits, getGuestBook, insertGuestBook };

@@ -1,7 +1,11 @@
+import Construction from "../component/Construction";
+
 function User() {
 
     return(
-        <div className="user"></div>
+        <div className="user">
+            <Construction />
+        </div>
     )
 }
 

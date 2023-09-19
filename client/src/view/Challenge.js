@@ -1,7 +1,10 @@
+import Construction from "../component/Construction";
 function Challenge() {
 
     return(
-        <div className="challenge"></div>
+        <div className="challenge">
+            <Construction />
+        </div>
     )
 }
 
