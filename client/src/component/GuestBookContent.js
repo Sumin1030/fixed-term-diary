@@ -19,10 +19,10 @@ function GuestBookContent(props) {
     }
 
     return (
-        <div className='guest-book-content'>
+        <div className='guest-book-content' onClick={(e) => props.onClick(e, {p: props.info.GUEST_BOOK_SQ, gp: props.info.GRAND_PARENT, d:props.info.DEPTH})}>
             <div className='gb-date'>{date}</div>
             {getDepth(props.info.DEPTH+1)}
-            <div className='gb-name'>{props.info.NAME} / </div>
+            <div className='gb-name'>{props.info.NAME+" / "}</div>
             <div className='gb-content'>{props.info.CONTENT}</div>
         </div>
     );

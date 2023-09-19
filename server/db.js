@@ -8,25 +8,7 @@ const connection = mysql.createConnection({
     password: 'typuz123',
     port: 3306,
     database: 'ftd',
-    onQueryStart: (_query, {text, values}) => {
-        console.log(
-          `${new Date().toISOString()} START QUERY ${text} - ${JSON.stringify(
-            values,
-          )}`,
-        );
-      },
-      onQueryResults: (_query, {text}, results) => {
-        console.log(
-          `${new Date().toISOString()} END QUERY   ${text} - ${
-            results.length
-          } results`,
-        );
-      },
-      onQueryError: (_query, {text}, err) => {
-        console.log(
-          `${new Date().toISOString()} ERROR QUERY ${text} - ${err.message}`,
-        );
-      }
+    multipleStatements : true
 }); 
 
 // const db = createConnectionPool({
@@ -110,17 +92,23 @@ const getGuestBook = (today, callback) => {
                     JOIN USER ON USER.ID = GB.ID
                     ORDER BY GRAND_PARENT, DEPTH, DATE
                 `;
+    console.log(query);
     connection.query(query, (err, rows) => {
         callback(rows, err);
     })
 }
 
 const insertGuestBook = (info, callback) => {
-    if (info.date && info.id && info.depth && info.content) {
+    if (info) {
         const query = info.parent? 
-            `INSERT INTO GUEST_BOOK(DATE, ID, DEPTH, CONTENT, PARENT) VALUES ('${info.date}','${info.id}', ${info.depth}, '${info.content}', ${info.parent})`
-            : `INSERT INTO GUEST_BOOK(DATE, ID, DEPTH, CONTENT) VALUES ('${info.date}','${info.id}', ${info.depth}, '${info.content}')`;
+            `INSERT INTO GUEST_BOOK(GUEST_BOOK_SQ, DATE, ID, DEPTH, CONTENT, GRAND_PARENT, PARENT)
+            VALUES ('${info.sq}', '${info.date}','${info.id}', ${info.depth}, '${info.content}', '${info.grandParent}', '${info.parent}');`
+            :
+            `INSERT INTO GUEST_BOOK(GUEST_BOOK_SQ, DATE, ID, DEPTH, CONTENT, GRAND_PARENT)
+            VALUES ('${info.sq}', '${info.date}','${info.id}', ${info.depth}, '${info.content}', '${info.grandParent}');`;
+        console.log(query);
         connection.query(query, (err, rows) => {
+            console.log(err, rows);
             callback(rows, err);
         })
     } else console.log("info 없음");

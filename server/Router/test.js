@@ -45,7 +45,7 @@ router.get('/getGuestBook', (req, res) => {
     });
 });
 
-router.get('/insertGuestBook', (req, res) => {
+router.post('/insertGuestBook', (req, res) => {
     const info = req.body;
     db.insertGuestBook(info, (result) => {
         res.send({result});
