@@ -511,3 +511,55 @@ code {
 
 
 
+
+
+
+/*
+************* Users *************
+*/
+.users {
+  display: flex;
+  flex-direction: column;
+}
+
+.userComp {
+  display: flex;
+  flex-direction: row;
+  color: white;
+  height: auto;
+}
+
+
+
+
+/*
+************* Blog *************
+*/
+.modal {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.67);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.close-btn {
+  height: auto;
+  width: 20px;  background-color: none;
+  color: white;
+}
+
+.blog {
+  width: 95%;
+  height: 95%;
+  background-color: black;
+  border: 1px solid gray;
+  border-radius: 1%;
+  display: flex;
+  flex-direction: row;
+}
