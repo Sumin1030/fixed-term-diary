@@ -55,7 +55,27 @@ router.post('/insertGuestBook', (req, res) => {
 router.get('/getUsers', (req, res) => {
     db.getUsers((result) => {
         res.send({result});
-    })
+    });
+});
+
+router.get('/getBlogList', (req, res) => {
+    db.getBlogList((result) => {
+        res.send({result});
+    });
+});
+
+router.get('/getBlogComment', (req, res) => {
+    const sq = req.query.sq;
+    db.getBlogComment(sq, (result) => {
+        res.send({result});
+    });
+});
+
+router.get('/getPost', (req, res) => {
+    const sq = req.query.sq;
+    db.getPost(sq, (result) => {
+        res.send({result});
+    });
 });
 
 module.exports = router;

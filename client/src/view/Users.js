@@ -51,7 +51,7 @@ function Users() {
                
             { modalSwitch? (
             <div className="modal">
-                <button className="close-btn" onClick={()=>setModalSwitch(false)}>X</button>
+                <button className="btn close-btn" onClick={()=>setModalSwitch(false)}>X</button>
                 <Blog />
             </div>) : null }
         </div>
