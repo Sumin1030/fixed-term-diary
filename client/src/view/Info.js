@@ -9,9 +9,13 @@ function Info() {
     
     useEffect(()=>{
         let curr = new Date();
-        const todayDate = new Date(DateUtil.getUtc(curr) - (DateUtil.TORONTO_OFFSET * DateUtil.MINUTES_TO_MILLISECONDS)).getDate();
+        const todayDate = new Date(DateUtil.getUtc(curr) - (DateUtil.TORONTO_OFFSET * DateUtil.MINUTES_TO_MILLISECONDS));
         const x = [];
-        for(let i = 0; i < 5; i++) x[i] = todayDate-i;
+        for(let i = 0; i < 5; i++) {
+            x[i] = DateUtil.getFixedDate(todayDate);
+            todayDate.setDate(todayDate.getDate() - 1);
+        }
+        console.log(x);
         let trace1 = {
             x: x,
             y: [0, 0, 0, 0, 0],

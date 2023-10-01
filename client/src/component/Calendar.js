@@ -68,6 +68,7 @@ function Calendar() {
                     // thead 월 표시 위함
                     const thisMonth = _today.getMonth();
                     if(j == 0 && lastMonth != thisMonth) {
+                        if(monthLoc.length > 0 && monthLoc[monthLoc.length-1].idx+1 == i) monthLoc.splice(monthLoc.length-1);
                         monthLoc.push({idx: i, month: thisMonth});
                         lastMonth = thisMonth;
                     }
