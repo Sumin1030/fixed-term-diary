@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/fixed-term-diary/static/css/main.d25481d6.css",
+    "main.js": "/fixed-term-diary/static/js/main.06c6230e.js",
+    "static/js/787.c4e7f8f9.chunk.js": "/fixed-term-diary/static/js/787.c4e7f8f9.chunk.js",
+    "index.html": "/fixed-term-diary/index.html",
+    "main.d25481d6.css.map": "/fixed-term-diary/static/css/main.d25481d6.css.map",
+    "main.06c6230e.js.map": "/fixed-term-diary/static/js/main.06c6230e.js.map",
+    "787.c4e7f8f9.chunk.js.map": "/fixed-term-diary/static/js/787.c4e7f8f9.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.d25481d6.css",
+    "static/js/main.06c6230e.js"
+  ]
+}
