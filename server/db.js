@@ -114,4 +114,37 @@ const insertGuestBook = (info, callback) => {
     } else console.log("info 없음");
 }
 
-module.exports = { test, searchID, signUp, insertVisit, getVisits, getGuestBook, insertGuestBook };
+const getUsers = (callback) => {
+    const query = `SELECT * FROM USER`;
+    connection.query(query, (err, rows) => {
+        callback(rows, err);
+    });
+}
+
+const getBlogList = (callback) => {
+    const query = `SELECT BLOG_SQ, DATE, TITLE FROM BLOG`;
+    connection.query(query, (err, rows) => {
+        callback(rows, err);
+    })
+}
+
+const getBlogComment = (sq, callback) => {
+    const query = `SELECT * FROM BLOG_COMMENT WHERE BLOG_SQ='${sq}'`;
+    console.log(query);
+    connection.query(query, (err, rows) => {
+        callback(rows, err);
+    })
+}
+
+const getPost = (sq, callback) => {
+    const query = `SELECT * FROM BLOG WHERE BLOG_SQ='${sq}'`;
+    connection.query(query, (err, rows) => {
+        callback(rows, err);
+    })
+}
+
+module.exports = { 
+    test, searchID, signUp, insertVisit, getVisits, 
+    getGuestBook, insertGuestBook, getUsers, getBlogList,
+    getBlogComment, getPost
+};

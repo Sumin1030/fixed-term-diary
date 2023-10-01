@@ -62,12 +62,13 @@ function Calendar() {
                     // 월, 수, 금만 표시
                     if(j%2 == 1) {
                         const label = isDayLabelShort? DateUtil.DAYS_INITIAL[j%DateUtil.DAYS_INITIAL.length] : DateUtil.DAYS[j%DateUtil.DAYS.length];
-                        td = <td className='td first day' idx={`${i}`} key={`${i}`}>{label}</td>
-                    } else td = <td className='td first' key={`${i}`}></td>;
+                        td = <td className='td first day' idx={`${i}`} key={i}>{label}</td>
+                    } else td = <td className='td first' key={i}></td>;
                 } else {
                     // thead 월 표시 위함
                     const thisMonth = _today.getMonth();
                     if(j == 0 && lastMonth != thisMonth) {
+                        if(monthLoc.length > 0 && monthLoc[monthLoc.length-1].idx+1 == i) monthLoc.splice(monthLoc.length-1);
                         monthLoc.push({idx: i, month: thisMonth});
                         lastMonth = thisMonth;
                     }
@@ -79,7 +80,7 @@ function Calendar() {
                         else if(i < 6) tooltipClass += " left-2";
                         else if(i < 20) tooltipClass += " left-3";
                         // 최근 1년에 해당하는 날짜
-                        td = <td key={`${i}`} className='td date' idx={`${i}`} date={`${_today.getFullYear()}-${thisMonth+1}-${_today.getDate()}`} style={{backgroundColor: setColor(contribution)}}>
+                        td = <td key={i} className='td date' idx={`${i}`} date={`${_today.getFullYear()}-${thisMonth+1}-${_today.getDate()}`} style={{backgroundColor: setColor(contribution)}}>
                             <span className={tooltipClass}>{contribution} contributions on {DateUtil.DAYS[_today.getDay()]}, {DateUtil.MONTHS[_today.getMonth()]} {_today.getDate()}, {_today.getFullYear()}</span>
                         </td>;
                     } else {
@@ -88,7 +89,7 @@ function Calendar() {
                         if(contribution == 0) contribution = 'No';
                         let tooltipClass = "calendar-tooltip";
                         if(i < 6) tooltipClass += " left";
-                        td = <td className='td' idx={`${i}`} key={`${i}`}></td>;
+                        td = <td className='td' idx={`${i}`} key={i}></td>;
                     }
                     // 세로가 한 주이므로, 다음 칸은 +7일이 됨.
                     _today = DateUtil.addDate(_today, numOfRow);
@@ -96,7 +97,7 @@ function Calendar() {
                 }      
                 tdArr.push(td);
             }
-            tr = <tr className='tr' key={`${j}`}>{tdArr}</tr>;
+            tr = <tr className='tr' key={j}>{tdArr}</tr>;
             tbody.push(tr);
         }
         // thead
@@ -106,16 +107,16 @@ function Calendar() {
         let content;
         for(let i = 0; i < numOfCol; i++) {
             td = null;
-            if (i == 0) td = <td className='td first' key={`${i}`}></td>;
+            if (i == 0) td = <td className='td first' key={i}></td>;
             else if (monthLoc[monthIdx].idx == i) {
                 // 월 표시 라벨은 해당 월에 해당하는 만큼 colspan으로 넓혀주기 -> 화면 크기에 맞춰 수정했으므로 주석처리함.
                 if(isMonthLabelNum)content = monthLoc[monthIdx].month + 1;
                 else content = DateUtil.MONTHS[monthLoc[monthIdx].month];
                 // const colspan = monthIdx < monthLoc.length - 1? monthLoc[monthIdx+1].idx - i : numOfCol - i;
                 // td = <td className='td month' colSpan={colspan} idx={`${monthIdx+1}`} key={`${monthIdx+1}`}>{content}</td>;
-                td = <td className='td month' idx={`${i}`} key={`${i}`}>{content}</td>;
+                td = <td className='td month' idx={`${i}`} key={i}>{content}</td>;
                 if(monthIdx < monthLoc.length-1) monthIdx++;
-            } else td = <td className='td' idx={`${i}`} key={`${i}`}></td>;
+            } else td = <td className='td' idx={`${i}`} key={i}></td>;
             if(td) tdArr.push(td);
         }
         const thead = <tr className='tr'>{tdArr}</tr>;

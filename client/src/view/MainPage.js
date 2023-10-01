@@ -1,9 +1,8 @@
 import Info from './Info';
-import User from './User';
+import Users from './Users';
 import GuestBook from './GuestBook';
 import TopPost from './TopPost';
 import Challenge from './Challenge';
-
 function MainPage() {
     return (
         // <div className="main">
@@ -24,7 +23,7 @@ function MainPage() {
                 <Info/>
             </div>
             <div className="main-center">
-                <User/>
+                <Users/>
             </div>    
             <div className="main-right">
                 <GuestBook/>

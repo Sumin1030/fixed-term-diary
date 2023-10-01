@@ -65,6 +65,13 @@ export default {
         
         return fullDate;
     },
+    getFixedDate(date) {
+        const myDate = this.checkDate_object(date);
+        const _date = this.timeFormat(myDate.getDate());
+        const _month = myDate.getMonth()+1;
+        const _year = myDate.getFullYear();
+        return `${_year}-${_month}-${_date}`;
+    },
     addDate(date, numOfDays) {
         return new Date(this.checkDate_time(date) + numOfDays*this.DAY_TO_MILLISECONDS);
     },
