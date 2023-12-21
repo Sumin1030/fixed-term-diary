@@ -3,7 +3,15 @@ import Users from './Users';
 import GuestBook from './GuestBook';
 import TopPost from './TopPost';
 import Challenge from './Challenge';
-function MainPage() {
+import axios from 'axios';
+function MainPage(props) {
+
+    const logout = (e) => {
+        axios.get(`/api/logout`).then((res) => {
+            console.log("logout");
+            props.changeState(false);
+        });
+    }
     return (
         // <div className="main">
         //     <Info/>
@@ -27,7 +35,10 @@ function MainPage() {
             </div>    
             <div className="main-right">
                 <GuestBook/>
-                <TopPost/>
+                {/* <TopPost/> */}
+                <div className='toppost'>
+                    <div className="logout-btn" onClick={logout}>로그아웃</div>
+                </div>
             </div>
             <div className="main-bottom">
                 <Challenge/>

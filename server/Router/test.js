@@ -24,6 +24,27 @@ router.post('/signUp', (req, res) => {
     })
 });
 
+router.post('/signIn', (req, res) => {
+    const info = req.body;
+    const session = req.session;
+    session.isLogined = true;
+    session.userid = info.id;
+    session.keyword = info.pw;
+    res.status(200).send();
+})
+
+router.get('/isLogined', (req, res) => {
+    const session = req.session;
+    let isLogined = false;
+    if(session.isLogined) isLogined = true;
+    res.status(200).send(isLogined);
+});
+
+router.get('/logout', (req, res) => {
+    req.session.isLogined = false;
+    res.status(200).send();
+});
+
 router.post(`/addVisit`, (req, res) => {
     const info = req.body;
     db.insertVisit(info, (result) => {

@@ -52,6 +52,14 @@ function Login(props) {
             }
         });
     }
+
+    // 로그인 성공
+    const signIn = (info) => {
+        console.log("Login.signIn");
+        axios.post(`/api/signIn`, info).then((res) => {
+            props.changeState(true);
+        });
+    }
     
     const signUp = (txt) => {
         if(title == ID) {
@@ -90,6 +98,9 @@ function Login(props) {
             } else if (txt == "R") {
                 setTitle(ID);
             } else if (txt == "Y") {
+                const currTime = new Date();
+                const date = DateUtil.getDate(new Date(currTime.getTime() + (currTime.getTimezoneOffset() * 60 * 1000)), "desc");
+                info.date = date;
                 axios.post(`/api/signUp`, info).then((res)=>{
                     if(res.data.result) {
                         isSignUp.current = false;
@@ -144,7 +155,7 @@ function Login(props) {
                 }
                 addVisit(info);
                 setFixedText(`${fixedText} \n Ready to start..`);
-                props.changeState(true);
+                signIn({...info, pw: loginPw});
             } else {
                 setFixedText(`${fixedText} \n Incorrect Password.`);
             }
@@ -160,6 +171,11 @@ function Login(props) {
             inputText(val);
             e.currentTarget.value = "";
         }
+    }
+
+    // 둘러보기 버튼 클릭
+    const clickEnter = (e) => {
+        props.changeState('enter');
     }
 
     useEffect(() => {
@@ -195,6 +211,7 @@ function Login(props) {
                     </div>
                 </div>
             </div>
+            <div className="enter-btn" onClick={clickEnter}>둘러보기</div>
         </div>
     );
 }
