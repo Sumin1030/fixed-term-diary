@@ -20,11 +20,26 @@ export default {
     get SECOND_TO_MILLISECONDS() {
         return 1000;
     },
+    get OFFSET_SUMMERTIME() {
+        return -60;
+    },
+    get _TORONTO_OFFSET() {
+        return 300;
+    },
     get TORONTO_OFFSET() {
-        return 240;
+        if(this.isSummerTime()) {
+            return this._TORONTO_OFFSET + this.OFFSET_SUMMERTIME;
+        }
+        return this._TORONTO_OFFSET;
     },
     get KOREA_OFFSET() {
         return -540;
+    },
+    isSummerTime() {
+        const current = new Date();
+        const month = current.getMonth();
+        if(month >= 5 && month < 9) return true;
+        return false;
     },
     dateToTime(date) {
         return date.getTime();
@@ -59,8 +74,9 @@ export default {
         const sec = this.timeFormat(myDate.getSeconds());
         let fullDate = `${hr}:${min}:${sec} ${date} ${this.MONTHS[month]} ${year}`;
         if(sort != "asc") {
-            deleteSec? fullDate = `${year}-${month+1}-${date} ${hr}:${min}` 
-                            : fullDate = `${year}-${month+1}-${date} ${hr}:${min}:${sec}`;
+            const _month = this.timeFormat(month+1)
+            deleteSec? fullDate = `${year}-${_month}-${date} ${hr}:${min}` 
+                            : fullDate = `${year}-${_month}-${date} ${hr}:${min}:${sec}`;
         }
         
         return fullDate;
