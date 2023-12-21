@@ -42,7 +42,38 @@ function CommentList(props) {
         }
     }, [props.selectedPost]);
 
-    return <div className='comment-list'>{comment}</div>;
+    // 엔터 눌렸는지 확인
+    const handleOnKeyPress = (e) => {
+        if(e.key == 'Enter') {
+            const val = e.currentTarget.value;
+            const utc = DateUtil.getUtc(new Date());
+            const sequence = `SQ_${utc}`;
+            let currTime = new Date();
+            const info = {
+                sq: sequence,
+                content: val,
+                date: DateUtil.getDate(utc, "desc"),
+                id: 'gjtnals2',
+                parent: props.selectedPost
+            };
+            axios.post("/api/insertBlogComment", info).then((res) => {
+                if(res.data.result) getComment();
+                else console.log('댓글 insert 실패', res);
+            });
+            e.currentTarget.value = "";
+        }
+    }
+
+    return (
+        <div className='comments'>
+            <div className='comment-list'>
+                {comment}
+            </div>
+            <div className="comment-input">
+                <input type="text" className="input-text" autoFocus onKeyDown={handleOnKeyPress}></input>
+            </div>
+        </div>
+    );
 
 }
 

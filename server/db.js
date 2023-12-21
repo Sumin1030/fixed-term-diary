@@ -31,8 +31,11 @@ const searchID = (id, callback) => {
 const signUp = (info, callback) => {
     if(info.id && info.pw && info.name) {
         info = replaceInfo(info);
-        connection.query(`INSERT INTO USER VALUES ('${info.id}', '${info.pw}', '${info.name}', '${info.msg}')`, (err, rows, fields) => {
+        const query = `INSERT INTO USER VALUES ('${info.id}', '${info.pw}', '${info.name}', '${info.msg}', 0, '${info.date}')`;
+        console.log(query);
+        connection.query(query, (err, rows, fields) => {
             // if(err) throw err;
+            console.log(rows, err, fields);
             callback(rows);
         });
         
@@ -136,6 +139,14 @@ const getBlogComment = (sq, callback) => {
     })
 }
 
+const insertBlogComment = (info, callback) => {
+    const query = `INSERT INTO BLOG_COMMENT(BLOG_COMMENT_SQ, DATE, ID, CONTENT, BLOG_SQ)
+    VALUES ('${info.sq}', '${info.date}','${info.id}', '${info.content}', '${info.parent}')`;
+    connection.query(query, (err, rows) => {
+        callback(rows, err);
+    })
+}
+
 const getPost = (sq, callback) => {
     const query = `SELECT * FROM BLOG WHERE BLOG_SQ='${sq}'`;
     connection.query(query, (err, rows) => {
@@ -146,5 +157,5 @@ const getPost = (sq, callback) => {
 module.exports = { 
     test, searchID, signUp, insertVisit, getVisits, 
     getGuestBook, insertGuestBook, getUsers, getBlogList,
-    getBlogComment, getPost
+    getBlogComment, insertBlogComment, getPost
 };
