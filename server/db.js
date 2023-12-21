@@ -139,6 +139,14 @@ const getBlogComment = (sq, callback) => {
     })
 }
 
+const insertBlogComment = (info, callback) => {
+    const query = `INSERT INTO BLOG_COMMENT(BLOG_COMMENT_SQ, DATE, ID, CONTENT, BLOG_SQ)
+    VALUES ('${info.sq}', '${info.date}','${info.id}', '${info.content}', '${info.parent}')`;
+    connection.query(query, (err, rows) => {
+        callback(rows, err);
+    })
+}
+
 const getPost = (sq, callback) => {
     const query = `SELECT * FROM BLOG WHERE BLOG_SQ='${sq}'`;
     connection.query(query, (err, rows) => {
@@ -149,5 +157,5 @@ const getPost = (sq, callback) => {
 module.exports = { 
     test, searchID, signUp, insertVisit, getVisits, 
     getGuestBook, insertGuestBook, getUsers, getBlogList,
-    getBlogComment, getPost
+    getBlogComment, insertBlogComment, getPost
 };

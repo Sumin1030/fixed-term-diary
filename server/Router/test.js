@@ -92,6 +92,13 @@ router.get('/getBlogComment', (req, res) => {
     });
 });
 
+router.post('/insertBlogComment', (req, res) => {
+    const info = req.body;
+    db.insertBlogComment(info, (result) => {
+        res.send({result});
+    })
+})
+
 router.get('/getPost', (req, res) => {
     const sq = req.query.sq;
     db.getPost(sq, (result) => {

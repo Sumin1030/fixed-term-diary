@@ -13,6 +13,7 @@ function Blog() {
     }
 
     const changeSelectedPost = (e = null) => {
+        // 같은 post 눌렀을 때 새로고침 기능으로 동작하도록 똑같이 다시 불러옴.
         console.log('selectedPostDom', selectedPostDom);
         if(selectedPostDom) selectedPostDom.classList.remove('selected-post');
         if(e) {

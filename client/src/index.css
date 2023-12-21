@@ -16,6 +16,10 @@ html, body {
   height: 100%;
 }
 
+.app {
+  position: fixed;
+}
+
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
@@ -23,6 +27,7 @@ code {
 
 .main {
   background-color: black;
+  overflow: hidden;
 }
 
 /*
@@ -49,6 +54,17 @@ code {
 .construction-inner * {
   height: auto;
 }
+
+
+/*
+****************** TopPost ******************
+*/
+/* .top-post {
+  display: flex;
+  align-items: end;
+  justify-content: end;
+} */
+
 
 /*
 ****************** Info ******************
@@ -193,12 +209,27 @@ code {
   grid-template-rows: 1.5fr 1fr;
 }
 
+.logout-btn {
+  width: 60px;
+  height: auto;
+  padding: 5px;
+  margin: 10px;
+  background-color: green;
+  border-radius: 9%;
+}
+
+.logout-btn:hover {
+  cursor: pointer;
+}
+
+
 /*
 **************** Login ****************
 */
 .login {
   background-color: rgb(40, 40, 40);
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
 }
@@ -261,7 +292,7 @@ code {
 
 .login-text-box {
   background-color: rgb(27, 27, 27);
-  width: 100%;
+  width: calc(100% - 10px);
   height: calc(100% - 28px);
   padding-left: 10px;
   overflow: scroll;
@@ -300,6 +331,22 @@ code {
   flex-direction: row;
   height: 25px;
   align-items: start;
+}
+
+.login .enter-btn {
+  width: auto;
+  height: 20px;
+  padding: 10px;
+  background-color: green;
+  border-radius: 15%;
+  display: inline;
+  position: absolute;
+  top: 75%;
+  left: 85%;
+}
+
+.login .enter-btn:hover {
+  cursor: pointer;
 }
 
 
@@ -467,8 +514,8 @@ code {
   border-top: 1px solid white;
 }
 .gb-date {
-  width: 130px;
-  min-width: 130px;
+  width: 137px;
+  min-width: 137px;
   margin-right: 8px;
 }
 .gb-depth {
@@ -583,7 +630,27 @@ code {
   cursor: pointer;
 }
 
-.posting-list, .comment-list {
+.comments {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid gray;
+  margin: 10px;
+  width: calc(30% - 20px);
+  height: calc(100% - 20px);
+}
+
+.comment-list {
+  display: flex;
+  flex-direction: column;
+  height: 95%;
+  overflow: scroll;
+}
+
+.comment-input {
+  height: 5%;
+}
+
+.posting-list {
   display: flex;
   flex-direction: column;
   height: auto;
