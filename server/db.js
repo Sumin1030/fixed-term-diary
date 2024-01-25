@@ -31,7 +31,7 @@ const searchID = (id, callback) => {
 const signUp = (info, callback) => {
     if(info.id && info.pw && info.name) {
         info = replaceInfo(info);
-        const query = `INSERT INTO USER VALUES ('${info.id}', '${info.pw}', '${info.name}', '${info.msg}', 0, '${info.date}')`;
+        const query = `INSERT INTO USER(ID, PW, NAME, MSG, CONFIRMED, SIGNUP_DATE) VALUES ('${info.id}', '${info.pw}', '${info.name}', '${info.msg}', 0, '${info.date}')`;
         console.log(query);
         connection.query(query, (err, rows, fields) => {
             // if(err) throw err;
