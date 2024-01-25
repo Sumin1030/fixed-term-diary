@@ -132,7 +132,7 @@ const getBlogList = (callback) => {
 }
 
 const getBlogComment = (sq, callback) => {
-    const query = `SELECT * FROM BLOG_COMMENT WHERE BLOG_SQ='${sq}'`;
+    const query = `SELECT BC.*, USER.NAME FROM BLOG_COMMENT AS BC JOIN USER ON BC.ID = USER.ID WHERE BLOG_SQ='${sq}'`;
     console.log(query);
     connection.query(query, (err, rows) => {
         callback(rows, err);

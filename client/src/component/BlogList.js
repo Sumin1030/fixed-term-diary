@@ -10,7 +10,9 @@ function BlogList(props) {
         const list = [];
         let idx = 1;
         if(props.date) list.push(<div key={idx++} className={`${className}-date`}>{date}</div>);
+        if(props.name) list.push(<div key={idx++} className={`${className}-name`}>{props.name}</div>);
         if(props.content) list.push(<div key={idx} className={`${className}-title`}>{props.content}</div>);
+
         return props.onClick ? 
             <div className={'blog-list ' + className} onClick={(e) => props.onClick(e, props.sq)}>{list}</div> :
             <div className={'blog-list ' + className}>{list}</div>
@@ -27,7 +29,7 @@ function CommentList(props) {
             const _blogArr = [];
             let idx = 0;
             result.forEach((blog) => {
-                const _blog = <BlogList key={idx++} content={blog.CONTENT} date={blog.DATE}id={blog.ID} title='comment'></BlogList>
+                const _blog = <BlogList key={idx++} content={blog.CONTENT} date={blog.DATE} name={blog.NAME} title='comment'></BlogList>
                 _blogArr.push(_blog);
             });
             setComment(_blogArr);
@@ -41,10 +43,15 @@ function CommentList(props) {
             } else getComment();
         }
     }, [props.selectedPost]);
-
+    let enterFlag = false;
     // 엔터 눌렸는지 확인
     const handleOnKeyPress = (e) => {
         if(e.key == 'Enter') {
+            if(enterFlag) {
+                e.currentTarget.value = "";
+                enterFlag = false;
+                return;
+            }
             const val = e.currentTarget.value;
             const utc = DateUtil.getUtc(new Date());
             const sequence = `SQ_${utc}`;
@@ -61,6 +68,7 @@ function CommentList(props) {
                 else console.log('댓글 insert 실패', res);
             });
             e.currentTarget.value = "";
+            enterFlag = true;
         }
     }
 
