@@ -30,14 +30,21 @@ router.post('/signIn', (req, res) => {
     session.isLogined = true;
     session.userid = info.id;
     session.keyword = info.pw;
+    session.name = info.name;
     res.status(200).send();
 })
 
 router.get('/isLogined', (req, res) => {
     const session = req.session;
-    let isLogined = false;
-    if(session.isLogined) isLogined = true;
-    res.status(200).send(isLogined);
+    let isLogined = false, info;
+    if(session.isLogined) {
+        isLogined = true;
+        info = {
+            ...session
+        };
+    }
+    console.log("session info : ", info);
+    res.status(200).send(info);
 });
 
 router.get('/logout', (req, res) => {

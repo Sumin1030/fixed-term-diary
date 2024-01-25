@@ -51,9 +51,9 @@ function App() {
       setContent(MAIN)
     } else {
       axios.get(`/api/isLogined`).then((res) => {
-        if(res && !res.data) {
+        if(res && !res.data.isLogined) {
           setContent(LOGIN);
-        } else if(res && res.data) setContent(MAIN);
+        } else if(res && res.data.isLogined) setContent(MAIN);
       });
     }
     }, [isLogined]);
