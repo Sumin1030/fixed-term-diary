@@ -1,6 +1,6 @@
 import DateUtil from "../util/DateUtil";
 import axios from "axios";
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 
 function BlogList(props) {
     const className = `${props.title}`;
@@ -23,6 +23,7 @@ function BlogList(props) {
 
 function CommentList(props) {
     const [comment, setComment] = useState([]);
+    const commentDiv = useRef(null);
     const getComment = () => {
         axios.get(`/api/getBlogComment?sq=${props.selectedPost}`).then((res) => {
             const result = res.data.result;
@@ -43,6 +44,12 @@ function CommentList(props) {
             } else getComment();
         }
     }, [props.selectedPost]);
+
+    // 댓글 최신순으로 보이도록, 새로운 댓글 등록 시 스크롤 맨 밑으로.
+    useEffect(() => {
+        commentDiv.current.scrollTop = commentDiv.current.scrollHeight;
+    }, [comment]);
+
     let enterFlag = false;
     // 엔터 눌렸는지 확인
     const handleOnKeyPress = (e) => {
@@ -66,6 +73,9 @@ function CommentList(props) {
             axios.post("/api/insertBlogComment", info).then((res) => {
                 if(res.data.result) getComment();
                 else console.log('댓글 insert 실패', res);
+                console.log(commentDiv.current);
+                // commentDiv.current.scrollIntoView({ behavior: 'smooth', block: 'end' });
+                commentDiv.current.scrollTop = commentDiv.current.scrollHeight;
             });
             e.currentTarget.value = "";
             enterFlag = true;
@@ -74,7 +84,7 @@ function CommentList(props) {
 
     return (
         <div className='comments'>
-            <div className='comment-list'>
+            <div className='comment-list' ref={commentDiv}>
                 {comment}
             </div>
             <div className="comment-input">
