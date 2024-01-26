@@ -89,7 +89,7 @@ function GuestBook() {
         // });
         axios.get(`/api/isLogined`).then((res) => {
             if(res && res.data.isLogined) loginInfo = res.data;
-            console.log("loginInfo : ", loginInfo);
+            else loginInfo = undefined;
         });
     }, []);
     let enterFlag = false;
@@ -106,9 +106,9 @@ function GuestBook() {
                 enterFlag = false;
                 e.currentTarget.value = "";
                 return;
-            } else if(typeof loginInfo == "undefined") {
+            } else if(typeof loginInfo == 'undefined') {
                 console.log("로그인 안 되어 있음", loginInfo);
-                alert("You have to login");
+                alert("You have to Sign in");
                 e.currentTarget.value = "";
                 enterFlag = true;
                 return;

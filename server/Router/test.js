@@ -37,6 +37,7 @@ router.post('/signIn', (req, res) => {
 router.get('/isLogined', (req, res) => {
     const session = req.session;
     let isLogined = false, info;
+    console.log("isLogined", session.isLogined);
     if(session.isLogined) {
         isLogined = true;
         info = {
@@ -49,6 +50,7 @@ router.get('/isLogined', (req, res) => {
 
 router.get('/logout', (req, res) => {
     req.session.isLogined = false;
+    console.log("logout", req.session.isLogined);
     res.status(200).send();
 });
 
