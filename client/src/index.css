@@ -426,35 +426,46 @@ code {
 **************** Calendar ****************
 */
 .calendar {
-  /* overflow: scroll; */
-  height: auto;
-  width: auto;
+  /* overflow: scroll;
+  height: 100%;
+  width: 100%; */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* text-align: center; */
+  font-size: 0.8vw;
 }
 .calendar table {
-  border-spacing: 5.3px;
-  /* width: max-content; */
+  border-spacing: 0.27vw;
+  width: 95%;
+  height: 43%;
 }
 
 .calendar .td.date {
   background-color: rgb(59, 59, 59);
 }
 
-.calendar .tbody .tr {
-  height: 5px;
+.calendar .tbody{
+  height: 75%;
+  width: 100%;
 }
 
-.calendar .thead .tr {
-  height: 25px;
+.calendar .thead{
+  height: 25%;
+  width: 100%;
 }
 
 .calendar .thead .td, .calendar .tbody .td {
-  width: 5px;
   padding: 0;
 }
 
-.calendar .tbody .td.first {
+.calendar .td.first {
   /* DayLabelShort: true일 때는 35px */
-  width: 15px;
+  width: 4%;
+}
+
+.calendar .td.first.day {
+  width: 1%;
 }
 
 .calendar .tbody .day {
@@ -546,7 +557,7 @@ code {
   display: flex;
   flex-direction: column;
   overflow: scroll;
-  
+  font-size: 0.7vw;
 }
 
 .guest-book-input {
@@ -579,8 +590,8 @@ code {
   border-top: 1px solid white;
 }
 .gb-date {
-  width: 137px;
-  min-width: 137px;
+  width: 20%;
+  min-width: 20%;
   margin-right: 8px;
 }
 .gb-depth {
@@ -617,15 +628,10 @@ code {
 }
 .gb-content {
   width: auto;
-  max-width: 55%;
+  max-width: 65%;
   height: auto;
   color: green;
 }
-
-
-
-
-
 
 /*
 ************* Users *************
