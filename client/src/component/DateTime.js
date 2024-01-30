@@ -46,7 +46,7 @@ function DateTime() {
 
     return(
         <div className="info-time">
-            <div className="left-time">
+            {/*<div className="left-time">
                 <div className="left-time-time">
                     <div className="left-day">
                         {leftTime.leftDay} Days 
@@ -57,8 +57,8 @@ function DateTime() {
                 </div>
                 <div className="left-time-text">
                     Left to explode
-                </div>
-            </div>
+                </div> 
+            </div> */}
             <div className="curr-time">
                 <div className="seoul-time">
                     <div className="time-title">

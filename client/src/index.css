@@ -107,12 +107,12 @@ code {
   justify-content:space-around;
 }
 
-.left-time, .curr-time>*, .visitor, .grass {
-  border-top: 0.1px solid gray;
-}
-
 .seoul-time>*, .toronto-time>* {
   height: 50%;
+}
+
+/* .left-time, .curr-time>*, .visitor, .grass {
+  border-top: 0.1px solid gray;
 }
 
 .left-time {
@@ -152,7 +152,7 @@ code {
   font-weight: bold;
   display: flex;
   align-items: center;
-}
+} */
 
 .time-title {
   color: rgb(77, 77, 77);
