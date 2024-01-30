@@ -81,11 +81,11 @@ code {
 }
 
 .info-time {
-  height: 40%;
+  height: 50%;
 }
 
 .visitor, .grass {
-  height: 30%;
+  height: 25%;
 }
 
 .grass {
@@ -95,7 +95,7 @@ code {
 }
 
 .curr-time {
-  height: 65%;
+  height: 40%;
 }
 
 .curr-time>* {
@@ -111,10 +111,11 @@ code {
   height: 50%;
 }
 
-/* .left-time, .curr-time>*, .visitor, .grass {
+.left-time, .curr-time>*, .visitor, .grass {
   border-top: 0.1px solid gray;
 }
 
+/* 
 .left-time {
   display: flex;
   flex-direction: column;
@@ -155,16 +156,17 @@ code {
 } */
 
 .time-title {
-  color: rgb(77, 77, 77);
-  font-weight: bold;
-  font-size: 2rem;
+  /* color: rgb(77, 77, 77); */
+  color: green;
+  /* font-weight: bold; */
+  font-size: 1.9vw;
   display: flex;
   align-items: center;
 }
 
 .today-time {
   color: gray;
-  font-size: 2.5rem;
+  font-size: 2.1vw;
   font-weight: normal;
 }
 
@@ -184,6 +186,69 @@ code {
 .guest-book {
   background-color: green;
 } */
+
+/*
+**************** DateTime ****************
+*/
+.d-day {
+  height: 60%;
+  display: flex;
+  flex-direction: column;
+}
+
+.d-day .country {
+  /* font-size: 16pt; */
+  font-size: 0.65vw;
+  font-weight: bold;
+  height: 60%;
+}
+
+.d-day .date {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  width: 60%;
+}
+
+.d-day .date * {
+  font-size: 0.9vw;
+  /* font-size: 0.48vw; */
+  font-weight: bold;
+  width: auto;
+}
+/* 3d
+.d-day .date .d {
+  font-size: 0.48vw;
+}
+
+.d-day .date .num {
+  font-size: 0.41vw;
+  margin-left: 7px;
+}
+.d-day .date .num1 {
+  margin-right: 0.35vw;
+}
+// .d-day .date .num4 {
+//  font-size: 6pt;
+// } 
+.d-day .date .num5 {
+  font-size: 0.37vw;
+}
+*/
+
+.d-day .secondRow {
+  display: flex;
+  height: 40%;
+}
+
+.d-day .secondRow .flag {
+  width: 40%;
+  font-size: 0.12vw;
+  display: flex;
+  align-items: center;
+  text-align: center;
+}
+
 
 /*
 **************** MainPage ****************
