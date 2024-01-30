@@ -206,15 +206,27 @@ code {
 .d-day .date {
   display: flex;
   flex-direction: row;
-  justify-content: flex-start;
-  width: 60%;
+  justify-content: center;
+  width: 73%;
 }
 
 .d-day .date * {
   font-size: 0.9vw;
   /* font-size: 0.48vw; */
   font-weight: bold;
-  width: auto;
+}
+.d-day .date .d {
+  width: 19%;
+}
+.d-day .date .plus {
+  width: 17%;
+}
+.d-day .date .num {
+  width: 20%;
+  text-align: center;
+}
+.d-day .date .num.num1 {
+  width: 17%;
 }
 /* 3d
 .d-day .date .d {
@@ -242,7 +254,7 @@ code {
 }
 
 .d-day .secondRow .flag {
-  width: 40%;
+  width: 27%;
   font-size: 0.12vw;
   display: flex;
   align-items: center;

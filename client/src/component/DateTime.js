@@ -3,7 +3,7 @@ import CurrentTime from './CurrentTime';
 
 function DateTime() {
     // 입국날짜 및 나라
-    const country = 'CANADA', startTime = new Date('2024-01-29');
+    const country = 'CANADA', startTime = new Date('2023-08-15');
     // // 토론토 기준 현재시간
     // let curr = new Date();
 
