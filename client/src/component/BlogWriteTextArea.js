@@ -1,3 +1,4 @@
+import closeButton from '../resource/images/closeButton.png';
 function BlogWriteTextArea(props) {
     const padding = 10;
 
@@ -9,7 +10,9 @@ function BlogWriteTextArea(props) {
 
     return (
         <div id={props.idx} className='blog-text-area'>
-            <div className='blog-text-area-delete' id={props.idx} onClick={props.clickDelete}>x</div>
+            <div className='blog-text-area-delete' id={props.idx} onClick={props.clickDelete}>
+                <img alt="X" src={closeButton} />
+            </div>
             <textarea className='input-text blog-write-content-input' autoFocus onChange={setHeight}></textarea>
         </div>
     );
