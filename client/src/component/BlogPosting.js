@@ -1,6 +1,6 @@
 import {useEffect, useState} from 'react';
 import axios from 'axios';
-import BlogWrite from './BlogWrite';
+// import BlogWrite from './BlogWrite';
 
 function BlogPosting(props) {
 
@@ -15,9 +15,7 @@ function BlogPosting(props) {
 
     useEffect(() => {
         if(props.selectedPost) {
-            if(props.selectedPost == 'new') {
-                setContent(<BlogWrite />)
-            } else getPost();
+            getPost();
         }
     }, [props.selectedPost]);
 

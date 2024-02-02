@@ -32,6 +32,9 @@ function MainPage(props) {
             </div>
             <div className="main-center">
                 <Users/>
+                <div className='from-host'>
+                    <div className='host-msg'>welcome</div>
+                </div>
             </div>    
             <div className="main-right">
                 <GuestBook/>

@@ -24,6 +24,7 @@ function BlogList(props) {
 function CommentList(props) {
     const [comment, setComment] = useState([]);
     const commentDiv = useRef(null);
+    const commentInput = useRef(null);
     const getComment = () => {
         axios.get(`/api/getBlogComment?sq=${props.selectedPost}`).then((res) => {
             const result = res.data.result;
@@ -41,7 +42,11 @@ function CommentList(props) {
         if(props.selectedPost) {
             if(props.selectedPost == 'new') {
                 setComment(null);
-            } else getComment();
+                commentInput.current.style.display = 'none';
+            } else {
+                getComment();
+                commentInput.current.style.display = '';
+            }
         }
     }, [props.selectedPost]);
 
@@ -88,7 +93,7 @@ function CommentList(props) {
                 {comment}
             </div>
             <div className="comment-input">
-                <input type="text" className="input-text" autoFocus onKeyDown={handleOnKeyPress}></input>
+                <input type="text" ref={commentInput} className="input-text" placeholder="댓글 입력" autoFocus onKeyDown={handleOnKeyPress}></input>
             </div>
         </div>
     );

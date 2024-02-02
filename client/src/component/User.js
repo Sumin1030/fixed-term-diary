@@ -9,21 +9,21 @@ function User(props) {
         }   
     */
    let date = props.info.date;
-   let className = 'userComp ';
+   let className = '';
    if (!props.info.title) {
         className += Number(props.info.confirmed) == 1? "confirmed" : "unconfirmed";
         date = DateUtil.getDate(new Date(props.info.date).getTime() - new Date(props.info.date).getTimezoneOffset()*DateUtil.MINUTES_TO_MILLISECONDS, "desc", true);
-   }
+   } else className += 'user-title'
    if(props.info.name == 'MASTER') className += ' master';
     return (
-        <div className={`userComp ${className}`} onClick={props.info.onClick} >
-            <div className="userComp-date">
+        <div className={`user ${className}`} onClick={props.info.onClick} >
+            <div className="user-date">
                 {date}
             </div>
-            <div className="userComp-name">
+            <div className="user-name">
                 {props.info.name}
             </div>
-            <div className="userComp-message">
+            <div className="user-message">
                 {props.info.message}
             </div>
         </div>

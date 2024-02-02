@@ -2,6 +2,7 @@ import { BlogList, CommentList } from "../component/BlogList";
 import BlogPosting from "../component/BlogPosting";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import BlogWrite from '../component/BlogWrite';
 
 let selectedPostDom = null;
 function Blog() {
@@ -40,6 +41,10 @@ function Blog() {
         getList();
     }, []);
 
+    useEffect(() => {
+        console.log('selectedPost', selectedPost);
+    }, [selectedPost]);
+
     const writeNewPosting = () => {
         setSelectedPost('new');
         changeSelectedPost();
@@ -51,8 +56,10 @@ function Blog() {
                 <BlogList title='new' onClick={() => writeNewPosting()} content=' +  New Post' />
                 {blogArr}
             </div>
-            <BlogPosting selectedPost={selectedPost}/>
-            <CommentList selectedPost={selectedPost}/>
+            {
+                selectedPost != 'new' ? <BlogPosting selectedPost={selectedPost} /> : <BlogWrite />
+            }
+            <CommentList selectedPost={selectedPost} />
         </div>
     );
 }
