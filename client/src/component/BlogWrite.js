@@ -1,25 +1,65 @@
 import axios from 'axios';
 import {useEffect, useState} from 'react';
 import BlogWriteTextArea from './BlogWriteTextArea';
+import {UploadImage, ImagePreview} from './UploadImage';
+
 let IDX = 1;
+let imageCnt = 0;
 function BlogWrite(props) {
     const clickDelete = (e) => {
         const id = e.target.id;
         setDeleteId(id);
     }
     const getTextArea = (idx) => {
-        const ta = <BlogWriteTextArea key={idx} idx={idx} clickDelete={clickDelete}/>
-        return ta;
+        return <BlogWriteTextArea key={idx} idx={idx} clickDelete={clickDelete} />;
     }
+    const getPreviewImage = (idx, image) => {
+        return <ImagePreview image={image} key={idx} idx={idx} clickDelete={clickDelete} />;
+    }
+    // const getImageUploader = (idx) => {
+    //     const iu = <UploadImage key={idx} idx={idx} clickDelete={clickDelete} />
+    //     return iu;
+    // }
     const [postingArea, setPostingArea] = useState([getTextArea(0)]);
+    const [uploadedImages, setUploadedImages] = useState([]);
     const [deleteId, setDeleteId] = useState();
     let textArr = postingArea;
 
-    const padding = 10;
+    const padding = 60;
 
+    useEffect(() => {
+        return () => {
+            IDX = 1;
+            imageCnt = 0;
+        }
+    }, []);
     useEffect(() => {
         deleteTextArea();
     }, [deleteId]);
+
+    useEffect(() => {
+        // uploadedImages에 맞춰 previewImages 생성
+        let idx = 1;
+        // const imageJSXs = uploadedImages.map((image) => {
+        const imageJSXs = [];
+        uploadedImages.forEach((image) => {
+        //   const isDeleteImage = (element) => {
+        //     return element === image;
+        //   };
+        //   const deleteFunc = () => {
+        //     uploadedImages.splice(uploadedImages.findIndex(isDeleteImage), 1);
+        //     setUploadedImages([...uploadedImages]);
+        //   };
+            console.log(imageCnt, idx);
+            if(imageCnt < idx++) imageJSXs.push(getPreviewImage(IDX++, image));
+            // return getPreviewImage(IDX++, image);
+        });
+        console.log('끝나고', imageJSXs, textArr);
+        textArr.push(...imageJSXs);
+        setPostingArea([...textArr]);
+        imageCnt += imageJSXs.length;
+      }, [uploadedImages]);
+
     /* 
      버튼으로 textArea, Image 추가하도록 한 이유
      기존 블로그들처럼 text와 image가 어울려서 있으려면 Html 형식으로 저장해야 함.
@@ -61,9 +101,10 @@ function BlogWrite(props) {
         }
     }
 
-    const addImage = () => {
-        console.log('addImage');
-    }
+    // const addImage = () => {
+    //     textArr.push(getImageUploader(IDX++));
+    //     setPostingArea([...textArr]);
+    // }
 
     // 제목 작성 시 엔터 입력되지 않도록 함.
     const checkEnter = (e) => {
@@ -86,9 +127,11 @@ function BlogWrite(props) {
                     {postingArea}
                 </div>
             </div>
+            <UploadImage setUploadedImages={setUploadedImages} />
             <div className="blog-write-button">
-                <div className="add-textarea" onClick={addTextArea}>TEXT</div>
-                <div className="add-image" onClick={addImage}>IMAGE</div>
+                <div className="add-textarea btn" onClick={addTextArea}> + TEXT</div>
+                <div className="submit-posting btn" >SUBMIT</div>
+                {/* <div className="add-image" onClick={addImage}>드래그하거나 <br /> 클릭하여<br />이미지 추가</div> */}
             </div>
             {/* <textarea className='input-text' onKeyDown={handleOnKeyPress}/> */}
         </div>

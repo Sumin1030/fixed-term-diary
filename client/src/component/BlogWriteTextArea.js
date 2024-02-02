@@ -10,8 +10,8 @@ function BlogWriteTextArea(props) {
 
     return (
         <div id={props.idx} className='blog-text-area'>
-            <div className='blog-text-area-delete' id={props.idx} onClick={props.clickDelete}>
-                <img alt="X" src={closeButton} />
+            <div className='blog-text-area-delete' onClick={props.clickDelete}>
+                <img alt="X" src={closeButton} id={props.idx}/>
             </div>
             <textarea className='input-text blog-write-content-input' autoFocus onChange={setHeight}></textarea>
         </div>
