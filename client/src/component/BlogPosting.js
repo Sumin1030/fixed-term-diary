@@ -5,11 +5,19 @@ import axios from 'axios';
 function BlogPosting(props) {
 
     const [content, setContent] = useState([]);
-
     const getPost = () => {
-        axios.get(`/api/getPost?sq=${props.selectedPost}`).then((res) => {
-            const _content = res.data.result[0].CONTENT;
-            setContent(_content);
+        axios.get(`/api/getPost?sq=${props.selectedPost}`, {'headers': { "Content-type": "application/json; charset=UTF-8" },'responseType': "blob"}).then((res) => {
+            // const _content = res.data.result[0].CONTENT;
+            console.log(res.data);
+            const newFile = new File([res.data], 'test');
+            const reader = new FileReader(); // 1
+            reader.onload = (event) => {
+                const previewImage = String(event.target?.result);
+                setContent(previewImage);
+                // setImageURL(previewImage); // 2
+            };
+            reader.readAsDataURL(newFile); // 3
+            // setContent(_content);
         });
     }
 
@@ -21,7 +29,8 @@ function BlogPosting(props) {
 
     return (
         <div className="blog-posting">
-            {content}
+            {/* {content} */}
+            <img src={content}></img>
         </div>
     );
 }

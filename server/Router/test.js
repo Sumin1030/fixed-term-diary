@@ -1,4 +1,5 @@
 const express = require('express');
+const multer = require('multer');
 const router = express.Router();
 const db = require('./../db')
 
@@ -108,9 +109,38 @@ router.post('/insertBlogComment', (req, res) => {
     })
 })
 
+const path = require('path');
 router.get('/getPost', (req, res) => {
     const sq = req.query.sq;
     db.getPost(sq, (result) => {
+        const _path = `..${result[0].image}`;
+        console.log(_path);
+        res.sendFile(path.join(__dirname, `${_path}`));
+        // res.send({result});
+    });
+});
+
+
+// const upload = multer({
+//     storage: multer.diskStorage({n
+//       destination: function (req, file, cb) {
+//         cb(null, './upload/');
+//       },
+//       filename: function (req, file, cb) {
+//         cb(null, new Date().valueOf() + path.extname(file.originalname));
+//       }
+//     }),
+//   });
+const upload = multer({dest: './upload', limits: { fieldSize: 25 * 1024 * 1024 }});
+router.post('/uploadImage', upload.array('file'), (req, res) => {
+    console.log('file!! : ', req.file, req.files);
+    const params = [];
+    req.files.forEach((file) => {
+        const fileName = '/upload/' + file.filename;
+        const param = [fileName];
+        params.push(param);
+    });
+    db.imgTest(params, (result) => {
         res.send({result});
     });
 });

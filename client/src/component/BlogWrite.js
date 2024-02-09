@@ -5,24 +5,44 @@ import {UploadImage, ImagePreview} from './UploadImage';
 
 let IDX = 1;
 let imageCnt = 0;
+const textAreas = {};
 function BlogWrite(props) {
     const clickDelete = (e) => {
         const id = e.target.id;
-        setDeleteId(id);
+        setPreviewDeleteId(id);
+    }
+
+    const setTxt = (idx, txt) => {
+        textAreas[idx] = txt;
     }
     const getTextArea = (idx) => {
-        return <BlogWriteTextArea key={idx} idx={idx} clickDelete={clickDelete} />;
+        return <BlogWriteTextArea key={idx} idx={idx} clickDelete={clickDelete} setTxt={setTxt}/>;
     }
-    const getPreviewImage = (idx, image) => {
-        return <ImagePreview image={image} key={idx} idx={idx} clickDelete={clickDelete} />;
+    // const isDeleteImage = (element) => {
+    //     return element === image;
+    // };
+    const deleteFunc = (image) => {
+        // 지금 문제 : deleteFunc를 실행하는 시점의 uploadedImages가 현재의 것이 아니라, 
+        //          이 컴포넌트 만들 시점의 것을 참조하고 있음.(삭제하려는 것까지만 추가되어 있는 시점임.)
+        // const startIdx = uploadedImages.findIndex(isDeleteImage);
+        // 여기 uploadedImages를 현재의 것으로 참조할 수 있는 방법은..?
+        const startIdx = uploadedImages.findIndex((element) => {
+            return element === image;
+        });
+        setLoadedDeleteId(startIdx);
+    };
+    const getPreviewImage = (idx, image, deleteFunc) => {
+        return <ImagePreview image={image} key={idx} idx={idx} clickDelete={(e) => {deleteFunc(image);clickDelete(e);}}/>;
     }
     // const getImageUploader = (idx) => {
     //     const iu = <UploadImage key={idx} idx={idx} clickDelete={clickDelete} />
     //     return iu;
     // }
-    const [postingArea, setPostingArea] = useState([getTextArea(0)]);
+
     const [uploadedImages, setUploadedImages] = useState([]);
-    const [deleteId, setDeleteId] = useState();
+    const [postingArea, setPostingArea] = useState([getTextArea(0)]);
+    const [previewDeleteId, setPreviewDeleteId] = useState();
+    const [loadedDeleteId, setLoadedDeleteId] = useState();
     let textArr = postingArea;
 
     const padding = 60;
@@ -31,33 +51,32 @@ function BlogWrite(props) {
         return () => {
             IDX = 1;
             imageCnt = 0;
+            textAreas = {};
         }
     }, []);
     useEffect(() => {
         deleteTextArea();
-    }, [deleteId]);
+    }, [previewDeleteId]);
+
+    useEffect(() => {
+        uploadedImages.splice(loadedDeleteId, 1);
+        setUploadedImages([...uploadedImages]);
+    }, [loadedDeleteId]);
 
     useEffect(() => {
         // uploadedImages에 맞춰 previewImages 생성
         let idx = 1;
         // const imageJSXs = uploadedImages.map((image) => {
         const imageJSXs = [];
-        uploadedImages.forEach((image) => {
-        //   const isDeleteImage = (element) => {
-        //     return element === image;
-        //   };
-        //   const deleteFunc = () => {
-        //     uploadedImages.splice(uploadedImages.findIndex(isDeleteImage), 1);
-        //     setUploadedImages([...uploadedImages]);
-        //   };
-            console.log(imageCnt, idx);
-            if(imageCnt < idx++) imageJSXs.push(getPreviewImage(IDX++, image));
+        uploadedImages.forEach((obj) => {
+            const image = obj.reader;
+            if(imageCnt < idx++) imageJSXs.push(getPreviewImage(IDX++, image, deleteFunc));
             // return getPreviewImage(IDX++, image);
         });
-        console.log('끝나고', imageJSXs, textArr);
         textArr.push(...imageJSXs);
         setPostingArea([...textArr]);
         imageCnt += imageJSXs.length;
+        console.log('update uploladedImages', uploadedImages);
       }, [uploadedImages]);
 
     /* 
@@ -87,10 +106,10 @@ function BlogWrite(props) {
 
     const deleteTextArea = () => {
         let idx;
-        if(deleteId) {
+        if(previewDeleteId) {
             let _idx = 0;
             textArr.filter((textArea) => {
-                if(textArea.key == deleteId) {
+                if(textArea.key == previewDeleteId) {
                     idx = _idx;
                     return;
                 }
@@ -117,6 +136,19 @@ function BlogWrite(props) {
         e.target.style.height = (e.target.scrollHeight - padding) + 'px';
     }
 
+    const submit = (e) => {
+        e.preventDefault();
+        const formData = new FormData();
+        console.log('postingArea', postingArea);
+        console.log('uploadedImage', uploadedImages);
+        // uploadedImages.forEach((img) => {
+        //     formData.append('file', img.file);
+        // });
+        // axios.post("/api/uploadImage", formData).then((res) => {
+        //     console.log(res);
+        // });
+    }
+
     return (
         <div className="blog-write">
             <div className="blog-write-area">
@@ -130,7 +162,7 @@ function BlogWrite(props) {
             <UploadImage setUploadedImages={setUploadedImages} />
             <div className="blog-write-button">
                 <div className="add-textarea btn" onClick={addTextArea}> + TEXT</div>
-                <div className="submit-posting btn" >SUBMIT</div>
+                <div className="submit-posting btn" onClick={submit} >SUBMIT</div>
                 {/* <div className="add-image" onClick={addImage}>드래그하거나 <br /> 클릭하여<br />이미지 추가</div> */}
             </div>
             {/* <textarea className='input-text' onKeyDown={handleOnKeyPress}/> */}

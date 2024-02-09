@@ -22,13 +22,20 @@ function UploadImage(props) {
                 const reader = new FileReader();
                 // image가 load된 후 콜백함수
                 reader.onloadend = (e) => {
-                    const result = e.target.result;
+                    const result = {
+                        file: file,
+                        reader: e.target.result
+                    };
                     if (result) {
                         // 최대 갯수 넘지 않도록
                         // state가 아니라 uploadedImages로 state를 가져와서 쓰면 일부만 저장된다.
                         // (실행되는 시점의 state와 변경되는 시점의 state가 꼬이나 봄)
                         // 그래서 함수 인자로 state를 써주면 해당 시점의 state를 기준으로 함.
-                        props.setUploadedImages((state) => [...state, result].slice(0, max));
+                        // upload된 이미지로 preview 컴
+                        props.setUploadedImages((state) => {
+                            const _result = [...state, result].slice(0, max);
+                            return _result;
+                        });
                     }
                 };
                 // 이미지 load
@@ -38,20 +45,23 @@ function UploadImage(props) {
         
         // 이벤트 기본 동작 방지 후 파일을 가져와 handleFiles로 넘김.
         const changeHandler = (event) => {
-          const files = event.target.files;
-          handleFiles(files);
+            console.log('changeHandler');
+            console.log(event);
+            const files = event.target.files;
+            handleFiles(files);
         };
         
         const dropHandler = (event) => {
-          event.preventDefault();
-          event.stopPropagation();
-          const files = event.dataTransfer.files;
-          handleFiles(files);
+            event.preventDefault();
+            event.stopPropagation();
+            const files = event.dataTransfer.files;
+            handleFiles(files);
+            // input.value = files;
         };
         
         const dragOverHandler = (event) => {
-          event.preventDefault();
-          event.stopPropagation();
+            event.preventDefault();
+            event.stopPropagation();
         };
         
         uploadBox.addEventListener("drop", dropHandler);
@@ -59,9 +69,9 @@ function UploadImage(props) {
         input.addEventListener("change", changeHandler);
         
         return () => {
-          uploadBox.removeEventListener("drop", dropHandler);
-          uploadBox.removeEventListener("dragover", dragOverHandler);
-          input.removeEventListener("change", changeHandler);
+            uploadBox.removeEventListener("drop", dropHandler);
+            uploadBox.removeEventListener("dragover", dragOverHandler);
+            input.removeEventListener("change", changeHandler);
         };
       }, [max]);
       
@@ -93,7 +103,8 @@ function UploadImage(props) {
             <div className='upload-image-box' ref={uploadBoxRef}>
                 + IMAGE<br /> DRAG AND DROP
             </div>
-            <input className='upload-image-input' type='file' accept="image/*" id={props.idx} ref={inputRef}></input>
+            <input className='test' type='file' accept="image/*" name='file' id={props.idx} ref={inputRef} style={{height: '30px'}}></input>
+            {/* <input className='upload-image-input' type='file' accept="image/*" name='file' id={props.idx} ref={inputRef}></input> */}
             {/* <div className='upload-image-preview'>
                 {previewImages}
             </div> */}

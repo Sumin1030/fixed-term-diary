@@ -38,7 +38,7 @@ function MainPage(props) {
             </div>    
             <div className="main-right">
                 <GuestBook/>
-                {/* <TopPost/> */}
+                <TopPost/>
                 <div className='toppost'>
                     <div className="logout-btn" onClick={logout}>로그아웃</div>
                 </div>

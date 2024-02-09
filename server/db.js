@@ -148,14 +148,28 @@ const insertBlogComment = (info, callback) => {
 }
 
 const getPost = (sq, callback) => {
-    const query = `SELECT * FROM BLOG WHERE BLOG_SQ='${sq}'`;
+    // const query = `SELECT * FROM BLOG WHERE BLOG_SQ='${sq}'`;
+    const query = `SELECT * FROM POSTING WHERE ID='1'`;
     connection.query(query, (err, rows) => {
         callback(rows, err);
     })
 }
 
+const imgTest = (params, callback) => {
+    let sql = '';
+    params.forEach((param) => {
+        const _sql = `INSERT INTO POSTING VALUES('${param[0]}', '1');`;
+        sql += _sql;
+    });
+    
+    connection.query(sql, (err, rows) => {
+        console.log(err, rows);
+        callback(rows, err);
+    });
+}
+
 module.exports = { 
     test, searchID, signUp, insertVisit, getVisits, 
     getGuestBook, insertGuestBook, getUsers, getBlogList,
-    getBlogComment, insertBlogComment, getPost
+    getBlogComment, insertBlogComment, getPost, imgTest
 };

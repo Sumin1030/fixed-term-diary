@@ -329,6 +329,9 @@ code {
   margin: 10px;
   background-color: green;
   border-radius: 9%;
+  position: absolute;
+  right: 1%;
+  bottom: 1%;
 }
 
 .logout-btn:hover {
@@ -589,6 +592,7 @@ code {
 }
 
 .guest-book-inner {
+  height: calc(100% - 25px);
   /* background-color: white; */
   background-color: rgb(14, 14, 14);
   border-top: 0.1px solid gray;
@@ -600,7 +604,8 @@ code {
 
 .guest-book-contents {
   width: auto;
-  height: calc(100% - 28px);
+  height: 93%;
+  /* height: calc(100% - 28px); */
   max-height: calc(100% - 28px);
   display: flex;
   flex-direction: column;
@@ -610,8 +615,13 @@ code {
 
 .guest-book-input {
   width: auto;
-  height: 28px;
+  height: 7%;
 }
+
+.guest-book-input .input-text {
+  height: 100%;
+}
+
 /* login input도 적용됨 */
 .input-text:focus {
   outline: none;
