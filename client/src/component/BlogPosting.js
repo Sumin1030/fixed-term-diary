@@ -4,10 +4,14 @@ import axios from 'axios';
 
 function BlogPosting(props) {
 
-    const [content, setContent] = useState([]);
+    const [content, setContent] = useState();
+    const [title, setTitle] = useState();
     const getPost = () => {
-        axios.get(`/api/getPost?sq=${props.selectedPost}`, {'headers': { "Content-type": "application/json; charset=UTF-8" },'responseType': "blob"}).then((res) => {
-            // const _content = res.data.result[0].CONTENT;
+        axios.get(`/api/getPost?sq=${props.selectedPost}`, {
+            // 'headers': {"Content-type": "application/json; charset=UTF-8" },
+            // 'responseType': "blob"
+        }).then((res) => {
+            /*
             console.log(res.data);
             const newFile = new File([res.data], 'test');
             const reader = new FileReader(); // 1
@@ -17,7 +21,21 @@ function BlogPosting(props) {
                 // setImageURL(previewImage); // 2
             };
             reader.readAsDataURL(newFile); // 3
-            // setContent(_content);
+            */
+            const contentObj = JSON.parse(res.data.CONTENT);
+            const _content = [];
+            const _title = res.data.TITLE;
+            let idx = 1;
+            for (const [key, content] of Object.entries(contentObj)) {
+                if(content?.type == 'img') {
+                    console.log(content.content);
+                    _content.push(<img className='image-preview' key={idx++} src={'api'+content.content} />);
+                } else {
+                    _content.push(<p className='posting-text' key={idx++}>{content}</p>);
+                }
+            }
+            setTitle(_title);
+            setContent(_content);
         });
     }
 
@@ -29,8 +47,9 @@ function BlogPosting(props) {
 
     return (
         <div className="blog-posting">
-            {/* {content} */}
-            <img src={content}></img>
+            <p className='blog-title'>{title}</p>
+            {content}
+            {/* <img src={content}></img> */}
         </div>
     );
 }

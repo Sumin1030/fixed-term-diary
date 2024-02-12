@@ -849,13 +849,21 @@ code {
 }
 
 .blog-posting {
-  padding: 10px;
+  padding: 20px;
   border: 1px solid gray;
   margin-top: 10px;
   margin-bottom: 10px;
   color: green;
-  height: calc(100% - 40px);
-  width: calc(60% - 20px);
+  height: calc(100% - 60px);
+  width: calc(60% - 40px);
+  overflow-y : scroll;
+}
+
+.blog-title {
+  height: auto;
+  color: green;
+  font-size: 50px;
+  margin-top: 30px;
 }
 
 .selected-post {
@@ -884,6 +892,10 @@ code {
   background-color: rgb(34, 34, 34);
   font-weight: bold;
   cursor: pointer;
+}
+
+.posting-text {
+  height: auto;
 }
 
 

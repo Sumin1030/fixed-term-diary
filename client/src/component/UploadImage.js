@@ -63,15 +63,19 @@ function UploadImage(props) {
             event.preventDefault();
             event.stopPropagation();
         };
+
+        const clickUploadBox = (e) => inputRef.current.click(e);
         
         uploadBox.addEventListener("drop", dropHandler);
         uploadBox.addEventListener("dragover", dragOverHandler);
         input.addEventListener("change", changeHandler);
+        uploadBox.addEventListener("click", clickUploadBox);
         
         return () => {
             uploadBox.removeEventListener("drop", dropHandler);
             uploadBox.removeEventListener("dragover", dragOverHandler);
             input.removeEventListener("change", changeHandler);
+            uploadBox.removeEventListener('click', clickUploadBox);
         };
       }, [max]);
       
@@ -103,8 +107,8 @@ function UploadImage(props) {
             <div className='upload-image-box' ref={uploadBoxRef}>
                 + IMAGE<br /> DRAG AND DROP
             </div>
-            <input className='test' type='file' accept="image/*" name='file' id={props.idx} ref={inputRef} style={{height: '30px'}}></input>
-            {/* <input className='upload-image-input' type='file' accept="image/*" name='file' id={props.idx} ref={inputRef}></input> */}
+            {/* <input className='test' type='file' accept="image/*" name='file' id={props.idx} ref={inputRef} style={{height: '30px'}}></input> */}
+            <input className='upload-image-input' type='file' accept="image/*" name='file' id={props.idx} ref={inputRef}></input>
             {/* <div className='upload-image-preview'>
                 {previewImages}
             </div> */}

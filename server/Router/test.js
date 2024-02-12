@@ -109,14 +109,18 @@ router.post('/insertBlogComment', (req, res) => {
     })
 })
 
-const path = require('path');
 router.get('/getPost', (req, res) => {
     const sq = req.query.sq;
     db.getPost(sq, (result) => {
-        const _path = `..${result[0].image}`;
-        console.log(_path);
-        res.sendFile(path.join(__dirname, `${_path}`));
-        // res.send({result});
+        // const _path = `..${result[0].image}`;
+        // console.log(_path);
+        // res.sendFile(path.join(__dirname, `${_path}`));
+        // const content = JSON.parse(result[0].CONTENT);
+        // const image = JSON.parse(result[0].IMAGE);
+        console.log(typeof result[0]);
+        // console.log(content);
+        // console.log(image);
+        res.send(result[0]);
     });
 });
 
@@ -133,16 +137,39 @@ router.get('/getPost', (req, res) => {
 //   });
 const upload = multer({dest: './upload', limits: { fieldSize: 25 * 1024 * 1024 }});
 router.post('/uploadImage', upload.array('file'), (req, res) => {
-    console.log('file!! : ', req.file, req.files);
-    const params = [];
-    req.files.forEach((file) => {
-        const fileName = '/upload/' + file.filename;
-        const param = [fileName];
-        params.push(param);
-    });
+    console.log(req.body);
+    console.log('file!! : ', req.files);
+    const params = {};
+    const imgs = {};
+    const imageIdx = req.body.imageIdx.split(',');
+    for(let i = 0; i < req.files.length; i++){
+        const file = req.files[i];
+        const idx = imageIdx[i];
+        const fileName = '/image?fileName=' + file.filename;
+        imgs[idx] = {
+            type: 'img', 
+            content: fileName
+        };
+        // const param = [fileName];
+        // params.push(param);
+    }
+    params.content = JSON.stringify({...imgs, ...JSON.parse(req.body.content)});
+    params.title = req.body.title;
+    params.date = req.body.date;
+    params.sq = req.body.sq;
     db.imgTest(params, (result) => {
         res.send({result});
     });
+    // res.send(200);
+});
+
+const path = require('path');
+router.get('/image', (req, res) => {
+    const fileName = req.query.fileName;
+    const _path = `../upload/${fileName}`;
+    console.log(_path);
+    res.sendFile(path.join(__dirname, `${_path}`));
+    // res.send(200);
 });
 
 module.exports = router;

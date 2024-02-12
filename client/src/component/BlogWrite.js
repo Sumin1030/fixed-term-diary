@@ -1,11 +1,13 @@
 import axios from 'axios';
-import {useEffect, useState} from 'react';
+import {useEffect, useState, useRef} from 'react';
 import BlogWriteTextArea from './BlogWriteTextArea';
 import {UploadImage, ImagePreview} from './UploadImage';
+import DateUtil from '../util/DateUtil';
 
 let IDX = 1;
 let imageCnt = 0;
-const textAreas = {};
+let textAreas = {};
+const TXT = 'txt', IMG = 'img';
 function BlogWrite(props) {
     const clickDelete = (e) => {
         const id = e.target.id;
@@ -16,7 +18,7 @@ function BlogWrite(props) {
         textAreas[idx] = txt;
     }
     const getTextArea = (idx) => {
-        return <BlogWriteTextArea key={idx} idx={idx} clickDelete={clickDelete} setTxt={setTxt}/>;
+        return <BlogWriteTextArea type={TXT} key={idx} idx={idx} clickDelete={clickDelete} setTxt={setTxt}/>;
     }
     // const isDeleteImage = (element) => {
     //     return element === image;
@@ -32,7 +34,7 @@ function BlogWrite(props) {
         setLoadedDeleteId(startIdx);
     };
     const getPreviewImage = (idx, image, deleteFunc) => {
-        return <ImagePreview image={image} key={idx} idx={idx} clickDelete={(e) => {deleteFunc(image);clickDelete(e);}}/>;
+        return <ImagePreview type={IMG} image={image} key={idx} idx={idx} clickDelete={(e) => {deleteFunc(image);clickDelete(e);}}/>;
     }
     // const getImageUploader = (idx) => {
     //     const iu = <UploadImage key={idx} idx={idx} clickDelete={clickDelete} />
@@ -43,6 +45,7 @@ function BlogWrite(props) {
     const [postingArea, setPostingArea] = useState([getTextArea(0)]);
     const [previewDeleteId, setPreviewDeleteId] = useState();
     const [loadedDeleteId, setLoadedDeleteId] = useState();
+    const title = useRef();
     let textArr = postingArea;
 
     const padding = 60;
@@ -137,23 +140,33 @@ function BlogWrite(props) {
     }
 
     const submit = (e) => {
+        // 이미지 위치를 db에 저장해야하므로 여기서 content와 imageIdx를 같이 보내면 얀 됨.
         e.preventDefault();
         const formData = new FormData();
-        console.log('postingArea', postingArea);
-        console.log('uploadedImage', uploadedImages);
-        // uploadedImages.forEach((img) => {
-        //     formData.append('file', img.file);
-        // });
-        // axios.post("/api/uploadImage", formData).then((res) => {
-        //     console.log(res);
-        // });
+        formData.append('content', JSON.stringify(textAreas));
+        formData.append('title', title.current.value);
+        const utc = DateUtil.getUtc(new Date());
+        formData.append('date', DateUtil.getDate(utc, "desc"));
+        formData.append('sq', `SQ_${utc}`);
+        const imgs = [];
+        uploadedImages.forEach((img) => {
+            const idx = postingArea.findIndex((element) => {
+                return element.props.type == IMG && element.props.image === img.reader;
+            });
+            imgs.push(idx);
+            formData.append('file', img.file);
+        });
+        formData.append('imageIdx', imgs);
+        axios.post("/api/uploadImage", formData).then((res) => {
+            console.log(res);
+        });
     }
 
     return (
         <div className="blog-write">
             <div className="blog-write-area">
                 <div className="blog-write-title">
-                    <textarea className='blog-write-title-input input-text' type='text' placeholder='title' onKeyPress={checkEnter} onChange={setTitleHeight} rows={1}></textarea>
+                    <textarea className='blog-write-title-input input-text' ref={title} type='text' placeholder='title' onKeyPress={checkEnter} onChange={setTitleHeight} rows={1}></textarea>
                 </div>
                 <div className="blog-write-content">
                     {postingArea}
