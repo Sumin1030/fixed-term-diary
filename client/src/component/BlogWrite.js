@@ -139,9 +139,23 @@ function BlogWrite(props) {
         e.target.style.height = (e.target.scrollHeight - padding) + 'px';
     }
 
+    const validationCheck = () => {
+        console.log(postingArea, textAreas);
+        if(title.current.value == null || title.current.value == '') {
+            return false;
+        } else if (uploadedImages.length == 0 && Object.keys(textAreas).length == 0) {
+            return false;
+        }
+        return true;
+    }
+
     const submit = (e) => {
         // 이미지 위치를 db에 저장해야하므로 여기서 content와 imageIdx를 같이 보내면 얀 됨.
         e.preventDefault();
+        if(!validationCheck()) {
+            alert('제목, 내용을 모두 입력하세요');
+            return;
+        };
         const formData = new FormData();
         formData.append('content', JSON.stringify(textAreas));
         formData.append('title', title.current.value);
@@ -159,6 +173,8 @@ function BlogWrite(props) {
         formData.append('imageIdx', imgs);
         axios.post("/api/uploadImage", formData).then((res) => {
             console.log(res);
+            const sq = res.data.param[0];
+            props.setSelectedPost(sq);
         });
     }
 

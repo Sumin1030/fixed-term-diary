@@ -157,8 +157,8 @@ router.post('/uploadImage', upload.array('file'), (req, res) => {
     params.title = req.body.title;
     params.date = req.body.date;
     params.sq = req.body.sq;
-    db.imgTest(params, (result) => {
-        res.send({result});
+    db.imgTest(params, (param, result) => {
+        res.send({param, result});
     });
     // res.send(200);
 });

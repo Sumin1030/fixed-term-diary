@@ -8,6 +8,7 @@ let selectedPostDom = null;
 function Blog() {
     const [blogArr, setBlogArr] = useState([]);
     const [selectedPost, setSelectedPost] = useState(null);
+    const [newPost, setNewPost] = useState(null);
     const onTitleClick = (e, sq) => {
         setSelectedPost(sq);
         changeSelectedPost(e);
@@ -38,11 +39,16 @@ function Blog() {
     }
 
     useEffect(() =>{
+        axios.get('/api/isLogined').then((res) => {
+            if(res.data != "" && res.data.name == 'MASTER') {
+                setNewPost(<BlogList title='new' onClick={() => writeNewPosting()} content=' +  New Post' />);
+            }
+        });
         getList();
     }, []);
 
     useEffect(() => {
-        console.log('selectedPost', selectedPost);
+        getList();
     }, [selectedPost]);
 
     const writeNewPosting = () => {
@@ -53,11 +59,11 @@ function Blog() {
     return (
         <div className="blog">
             <div className='posting-list'>
-                <BlogList title='new' onClick={() => writeNewPosting()} content=' +  New Post' />
+                {newPost}
                 {blogArr}
             </div>
             {
-                selectedPost != 'new' ? <BlogPosting selectedPost={selectedPost} /> : <BlogWrite />
+                selectedPost != 'new' ? <BlogPosting selectedPost={selectedPost} /> : <BlogWrite setSelectedPost={setSelectedPost}/>
             }
             <CommentList selectedPost={selectedPost} />
         </div>

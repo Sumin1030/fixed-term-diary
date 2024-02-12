@@ -166,8 +166,8 @@ const imgTest = (params, callback) => {
     const sql = `INSERT INTO BLOG VALUES(?, ?, ?, ?, ?);`;
     const param = [params.sq, params.date, params.content, params.title, '이 컬럼 삭제필요'];
     connection.query(sql, param, (err, rows) => {
-        console.log(err, rows);
-        callback(rows, err);
+        console.log(param, err, rows);
+        callback(param, rows, err);
     });
 }
 
