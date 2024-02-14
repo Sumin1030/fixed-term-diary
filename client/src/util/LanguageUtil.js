@@ -22,8 +22,8 @@ export default {
         }
     },
     getLangObj(val) {
-        if(val == this.kor || val.val == this.kor) return this.kor_obj;
-        else if (val == this.eng || val.val == this.eng) return this.eng_obj;
+        if(val == this.kor || val?.val == this.kor) return this.kor_obj;
+        else if (val == this.eng || val?.val == this.eng) return this.eng_obj;
     },
     langData(lang) {
         if (lang == this.kor || lang?.val == this.kor) {
@@ -49,8 +49,6 @@ export default {
     //     })
     // },
     getMessage(msg, lang) {
-        console.log('getMessage', msg);
-
         const msgArr = msg.split('.');
         // const lang = this.getCurLeng();
         // const lang = this.kor;
@@ -66,8 +64,6 @@ export default {
         
     },
     changeLang(_lang, callback) {
-        console.log(callback);
-        console.log('setLang', _lang);
         axios.post('/api/setLanguage', {lang: _lang}).then((res) => {
             // if(typeof res.data == 'object') lang = res.data.val;
             callback(this.getLangObj(res.data));

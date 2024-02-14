@@ -47,9 +47,19 @@ function Info(props) {
             }
             const data = [trace1];
             Plotly.newPlot('myDiv', data, layout, option);
+            window.addEventListener('resize', redrawPlotly);
         });
 
+        return () => {
+            window.removeEventListener('resize', redrawPlotly);
+        }
+
     }, []);
+
+    const redrawPlotly = (e) => {
+        Plotly.relayout('myDiv', {});
+        
+    }
 
     const layout = {
         xaxis: {
@@ -71,7 +81,8 @@ function Info(props) {
             l: 60,
             r: 30,
             pad: 10
-        }
+        },
+        autosize: true
     };
 
     const option = {
@@ -82,7 +93,7 @@ function Info(props) {
         <div className="info">
             <label className='info-title'>{LanguageUtil.getMessage('mainPage.information', props.lang)}</label>
             <DateTime />
-            <div className="visitor" id="myDiv">
+            <div className="visitor" id="myDiv" >
             </div>
             <div className="grass">
                 <Calander />
