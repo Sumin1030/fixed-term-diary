@@ -28,6 +28,7 @@ import { useEffect } from 'react';
 import { useState } from 'react';
 import MainPage from './MainPage';
 import Login from './Login';
+import LanguageUtil from "../util/LanguageUtil";
 // import Calander from '../component/Calendar';
 
 function App() {
@@ -38,25 +39,27 @@ function App() {
   const [isLogined, setIsLogined] = useState(false);
   const [content, setContent] = useState();
 
-  const changeLoginState = (state) => {
-    setIsLogined(state);
-  }
+  const LOGIN = <Login changeState={setIsLogined} />;
 
-  const MAIN = <MainPage changeState={changeLoginState}/>;
-  const LOGIN = <Login changeState={changeLoginState} />;
+  const getMain = (lang) => {
+    const MAIN = <MainPage changeState={setIsLogined} lang={lang}/>;
+    return MAIN;
+  }
 
   // 두 번째 인자에 빈 배열로 넣으면 처음 렌더링 시에만 함수 호출됨.
   useEffect(()=> {
-    if(isLogined == 'enter') {
-      setContent(MAIN)
-    } else {
       axios.get(`/api/isLogined`).then((res) => {
-        if(res && !res.data.isLogined) {
+        console.log('isLogined Response', res.data.isLogined)
+        // 세션에 language 초기값 저장
+        const lang = LanguageUtil.getLangObj(res.data.lang);
+        if(isLogined == 'enter') {
+          setContent(getMain(lang));
+        }
+        else if(res && !res.data.isLogined) {
           setContent(LOGIN);
-        } else if(res && res.data.isLogined) setContent(MAIN);
+        } else if(res && res.data.isLogined) setContent(getMain(lang));
       });
-    }
-    }, [isLogined]);
+  }, [isLogined]);
 
   return (
     <div className="app">

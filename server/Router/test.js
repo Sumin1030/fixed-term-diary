@@ -28,23 +28,25 @@ router.post('/signUp', (req, res) => {
 router.post('/signIn', (req, res) => {
     const info = req.body;
     const session = req.session;
-    session.isLogined = true;
-    session.userid = info.id;
-    session.keyword = info.pw;
-    session.name = info.name;
+    // 둘러보기
+    if(info.enter) {
+        console.log('둘러보기');
+        session.isLogined = false;
+    } else {
+        session.isLogined = true;
+        session.userid = info.id;
+        session.keyword = info.pw;
+        session.name = info.name;
+    }
+    session.lang = 'ENG';
     res.status(200).send();
 })
 
 router.get('/isLogined', (req, res) => {
     const session = req.session;
-    let isLogined = false, info;
-    console.log("isLogined", session.isLogined);
-    if(session.isLogined) {
-        isLogined = true;
-        info = {
-            ...session
-        };
-    }
+    const info = {
+        ...session
+    };
     console.log("session info : ", info);
     res.status(200).send(info);
 });
@@ -52,8 +54,19 @@ router.get('/isLogined', (req, res) => {
 router.get('/logout', (req, res) => {
     req.session.isLogined = false;
     console.log("logout", req.session.isLogined);
-    res.status(200).send();
+    res.status(200).send(req.session.isLogined);
 });
+
+router.post('/setLanguage', (req, res) => {
+    console.log('set', req.body.lang);
+    req.session.lang = req.body.lang;
+    res.status(200).send(req.session.lang);
+})
+
+router.get('/getLanguage', (req, res) => {
+    let lang = req.session.lang;
+    res.status(200).send(lang);
+})
 
 router.post(`/addVisit`, (req, res) => {
     const info = req.body;

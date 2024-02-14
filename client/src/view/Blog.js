@@ -3,9 +3,10 @@ import BlogPosting from "../component/BlogPosting";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import BlogWrite from '../component/BlogWrite';
+import LanguageUtil from "../util/LanguageUtil";
 
 let selectedPostDom = null;
-function Blog() {
+function Blog(props) {
     const [blogArr, setBlogArr] = useState([]);
     const [selectedPost, setSelectedPost] = useState(null);
     const [newPost, setNewPost] = useState(null);
@@ -41,7 +42,7 @@ function Blog() {
     useEffect(() =>{
         axios.get('/api/isLogined').then((res) => {
             if(res.data != "" && res.data.name == 'MASTER') {
-                setNewPost(<BlogList title='new' onClick={() => writeNewPosting()} content=' +  New Post' />);
+                setNewPost(<BlogList title='new' onClick={() => writeNewPosting()} content={' + '+LanguageUtil.getMessage('blog.newPost', LanguageUtil.kor)} />);
             }
         });
         getList();
@@ -65,7 +66,7 @@ function Blog() {
             {
                 selectedPost != 'new' ? <BlogPosting selectedPost={selectedPost} /> : <BlogWrite setSelectedPost={setSelectedPost}/>
             }
-            <CommentList selectedPost={selectedPost} />
+            <CommentList lang={props.lang} selectedPost={selectedPost} />
         </div>
     );
 }

@@ -3,7 +3,7 @@ import axios from 'axios';
 import User from '../component/User';
 import Blog from './Blog';
 import closeButton from '../resource/images/closeButton.png';
-function Users() {
+function Users(props) {
     const [modalSwitch, setModalSwitch] = useState(false);
     const [users, setUsers] = useState([]);
 
@@ -55,7 +55,7 @@ function Users() {
                 <button className="btn close-btn" onClick={()=>setModalSwitch(false)}>
                     <img alt="X" src={closeButton} />
                 </button>
-                <Blog />
+                <Blog lang={props.lang}/>
             </div>) : null }
         </div>
     );

@@ -4,8 +4,9 @@ import DateUtil from '../util/DateUtil';
 import { useEffect } from 'react';
 import Plotly from "plotly.js-dist";
 import axios from "axios";
+import LanguageUtil from '../util/LanguageUtil';
 
-function Info() {
+function Info(props) {
     
     useEffect(()=>{
         let curr = new Date();
@@ -79,7 +80,7 @@ function Info() {
 
     return(
         <div className="info">
-            information
+            <label className='info-title'>{LanguageUtil.getMessage('mainPage.information', props.lang)}</label>
             <DateTime />
             <div className="visitor" id="myDiv">
             </div>

@@ -80,12 +80,20 @@ code {
   background-color: rgb(14, 14, 14);
 }
 
+.info-title{
+  height: 1.5%;
+ }
+
 .info-time {
   height: 50%;
 }
 
-.visitor, .grass {
+.visitor {
   height: 25%;
+}
+
+.grass {
+  height: 23.5%;
 }
 
 .grass {
@@ -111,7 +119,7 @@ code {
   height: 50%;
 }
 
-.left-time, .curr-time>*, .visitor, .grass {
+.left-time, .info-time, .curr-time>*, .visitor, .grass {
   border-top: 0.1px solid gray;
 }
 
@@ -287,6 +295,28 @@ code {
   min-height: 100%;
   display: grid;
   grid-template-rows: 1.5fr 1fr;
+  position: relative;
+}
+
+.main-setting {
+  position: absolute;
+  display: flex;
+  justify-content: end;
+  padding: 5px;
+  padding-right: 10px;
+  padding-left: 10px;
+  color: gray;
+  width: calc(100% - 20px);
+  height: 20px;
+}
+
+.lang {
+  width: auto;
+}
+
+.lang:hover {
+  cursor: pointer;
+  font-weight: bold;
 }
 
 .main-center {
@@ -591,6 +621,10 @@ code {
   flex-direction: column;
 }
 
+.guest-book-title {
+  height: 4%;
+}
+
 .guest-book-inner {
   height: calc(100% - 25px);
   /* background-color: white; */
@@ -599,7 +633,6 @@ code {
   /* margin: 10px;
   width: calc(100% - 20px);
   height: calc(100% - 20px); */
-
 }
 
 .guest-book-contents {

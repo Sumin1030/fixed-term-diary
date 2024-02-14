@@ -54,11 +54,11 @@ function Login(props) {
         });
     }
 
-    // 로그인 성공
-    const signIn = (info) => {
-        console.log("Login.signIn");
+    // 로그인 
+    const signIn = (info, isEnter = false) => {
+        const result = isEnter? 'enter' : true;
         axios.post(`/api/signIn`, info).then((res) => {
-            props.changeState(true);
+            props.changeState(result);
         });
     }
     
@@ -177,7 +177,8 @@ function Login(props) {
 
     // 둘러보기 버튼 클릭
     const clickEnter = (e) => {
-        props.changeState('enter');
+        const isEnter = true;
+        signIn({enter: true}, isEnter);
     }
 
     useEffect(() => {

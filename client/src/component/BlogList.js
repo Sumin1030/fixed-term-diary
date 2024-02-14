@@ -1,6 +1,7 @@
 import DateUtil from "../util/DateUtil";
 import axios from "axios";
 import { useEffect, useState, useRef } from 'react';
+import LanguageUtil from "../util/LanguageUtil";
 
 function BlogList(props) {
     const className = `${props.title}`;
@@ -93,7 +94,7 @@ function CommentList(props) {
                 {comment}
             </div>
             <div className="comment-input">
-                <input type="text" ref={commentInput} className="input-text" placeholder="댓글 입력" autoFocus onKeyDown={handleOnKeyPress}></input>
+                <input type="text" ref={commentInput} className="input-text" placeholder={LanguageUtil.getMessage('blog.comment', props.lang)} autoFocus onKeyDown={handleOnKeyPress}></input>
             </div>
         </div>
     );

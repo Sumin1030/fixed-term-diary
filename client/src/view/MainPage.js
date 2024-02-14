@@ -4,14 +4,39 @@ import GuestBook from './GuestBook';
 import TopPost from './TopPost';
 import Challenge from './Challenge';
 import axios from 'axios';
+import Setting from '../component/Setting';
+import { useEffect, useState } from 'react';
+import LanguageUtil from '../util/LanguageUtil';
 function MainPage(props) {
 
     const logout = (e) => {
         axios.get(`/api/logout`).then((res) => {
-            console.log("logout");
-            props.changeState(false);
+            console.log("logout", res.data);
+            props.changeState(res.data);
         });
     }
+
+    // const _setLang = () => {
+    //     let rst;
+    //     const callback = (result) => {
+    //         rst = LanguageUtil.getLangObj(result);
+    //         console.log('callback: ', rst);
+    //     }
+    //     LanguageUtil.getCurLeng(callback);
+    //     return rst;
+        // LanguageUtil.getCurLeng().then((result) => {
+        //     return LanguageUtil.getLangObj(result);
+        // });
+    // }
+
+    const [lang, setLang] = useState(props.lang);
+
+    useEffect(() => {
+        console.log('main useEffect', lang);
+        // language가 바뀌면 state를 바꾸는 게 아니라, axios호출을 하고 받아온 값으로 state를 바꿔야 할 듯.
+        // LanguageUtil.changeLang(lang);
+    }, [lang]);
+
     return (
         // <div className="main">
         //     <Info/>
@@ -27,17 +52,19 @@ function MainPage(props) {
         //     </div>
         // </div>
         <div className="main">
+            {console.log('render')}
             <div className="main-left">
-                <Info/>
+                <Info lang={lang}/>
             </div>
             <div className="main-center">
-                <Users/>
+                <Users lang={lang}/>
                 <div className='from-host'>
                     <div className='host-msg'>welcome</div>
                 </div>
             </div>    
             <div className="main-right">
-                <GuestBook/>
+                <Setting lang={lang} setLang ={setLang}/>
+                <GuestBook lang={lang}/>
                 <TopPost/>
                 <div className='toppost'>
                     <div className="logout-btn" onClick={logout}>로그아웃</div>
@@ -47,7 +74,7 @@ function MainPage(props) {
                 <Challenge/>
             </div>
         </div>
-    )
+    );
 
 }
 
