@@ -5,8 +5,6 @@ import TopPost from './TopPost';
 import Challenge from './Challenge';
 import axios from 'axios';
 import Setting from '../component/Setting';
-import { useEffect, useState } from 'react';
-import LanguageUtil from '../util/LanguageUtil';
 function MainPage(props) {
 
     const logout = (e) => {
@@ -29,14 +27,6 @@ function MainPage(props) {
         // });
     // }
 
-    const [lang, setLang] = useState(props.lang);
-
-    useEffect(() => {
-        console.log('main useEffect', lang);
-        // language가 바뀌면 state를 바꾸는 게 아니라, axios호출을 하고 받아온 값으로 state를 바꿔야 할 듯.
-        // LanguageUtil.changeLang(lang);
-    }, [lang]);
-
     return (
         // <div className="main">
         //     <Info/>
@@ -52,19 +42,18 @@ function MainPage(props) {
         //     </div>
         // </div>
         <div className="main">
-            {console.log('render')}
             <div className="main-left">
-                <Info lang={lang}/>
+                <Info/>
             </div>
             <div className="main-center">
-                <Users lang={lang}/>
+                <Users/>
                 <div className='from-host'>
                     <div className='host-msg'>welcome</div>
                 </div>
             </div>    
             <div className="main-right">
-                <Setting lang={lang} setLang ={setLang}/>
-                <GuestBook lang={lang}/>
+                <Setting/>
+                <GuestBook/>
                 <TopPost/>
                 <div className='toppost'>
                     <div className="logout-btn" onClick={logout}>로그아웃</div>

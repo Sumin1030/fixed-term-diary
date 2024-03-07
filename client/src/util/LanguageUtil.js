@@ -1,7 +1,6 @@
 import kor from './kor.json';
 import eng from './eng.json';
-import axios from 'axios';
-let lang;
+
 export default {
     get kor() {
         return "KOR"
@@ -48,12 +47,12 @@ export default {
     //         return res.data;
     //     })
     // },
-    getMessage(msg, lang) {
+    getMessage(msg, _lang) {
         const msgArr = msg.split('.');
         // const lang = this.getCurLeng();
         // const lang = this.kor;
         let result;
-        const cur = this.langData(lang);
+        const cur = this.langData(_lang);
         let _cur = cur;
         msgArr.forEach((key) => {
             _cur = _cur[key];
@@ -63,10 +62,10 @@ export default {
         return result;
         
     },
-    changeLang(_lang, callback) {
-        axios.post('/api/setLanguage', {lang: _lang}).then((res) => {
-            // if(typeof res.data == 'object') lang = res.data.val;
-            callback(this.getLangObj(res.data));
-        });
-    }
+    // changeLang(_lang, callback) {
+    //     axios.post('/api/setLanguage', {lang: _lang}).then((res) => {
+    //         // if(typeof res.data == 'object') lang = res.data.val;
+    //         callback(this.getLangObj(res.data));
+    //     });
+    // }
 }

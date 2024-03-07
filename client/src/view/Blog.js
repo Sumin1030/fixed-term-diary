@@ -66,7 +66,7 @@ function Blog(props) {
             {
                 selectedPost != 'new' ? <BlogPosting selectedPost={selectedPost} /> : <BlogWrite setSelectedPost={setSelectedPost}/>
             }
-            <CommentList lang={props.lang} selectedPost={selectedPost} />
+            <CommentList selectedPost={selectedPost} />
         </div>
     );
 }

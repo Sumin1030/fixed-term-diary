@@ -6,5 +6,9 @@
     "blog" : {
         "newPost": "새 글 쓰기",
         "comment": "댓글을 입력하세요."
+    },
+    "construction" : {
+        "underConstruction" : "아직 개발중 입니다.",
+        "commingSoon" : "커 밍 순,,"
     }
 }

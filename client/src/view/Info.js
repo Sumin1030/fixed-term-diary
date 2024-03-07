@@ -5,9 +5,10 @@ import { useEffect } from 'react';
 import Plotly from "plotly.js-dist";
 import axios from "axios";
 import LanguageUtil from '../util/LanguageUtil';
+import { useSelector } from 'react-redux';
 
 function Info(props) {
-    
+    const lang = useSelector(state => state.language.lang);
     useEffect(()=>{
         let curr = new Date();
         const todayDate = new Date(DateUtil.getUtc(curr) - (DateUtil.TORONTO_OFFSET * DateUtil.MINUTES_TO_MILLISECONDS));
@@ -91,7 +92,7 @@ function Info(props) {
 
     return(
         <div className="info">
-            <label className='info-title'>{LanguageUtil.getMessage('mainPage.information', props.lang)}</label>
+            <label className='info-title'>{LanguageUtil.getMessage('mainPage.information', lang)}</label>
             <DateTime />
             <div className="visitor" id="myDiv" >
             </div>

@@ -3,6 +3,7 @@ import axios from 'axios';
 import DateUtil from '../util/DateUtil';
 import GuestBookContent from '../component/GuestBookContent';
 import LanguageUtil from '../util/LanguageUtil';
+import { useSelector } from 'react-redux';
 
 // 로그인 했는지 확인 
 // -> 글 등록할 때 확인하려면 모든 코드를 callback에 넣어야 하므로 미리 해놓기.
@@ -13,6 +14,8 @@ function GuestBook(props) {
     const input = useRef(null);
     const selectedContent = useRef(null);
     const [contents, setContents] = useState([]);
+    const lang = useSelector(state => state.language.lang);
+
     const getToday = () => {
         let curr = new Date();
         return DateUtil.getDate(DateUtil.getUtc(`${curr.getFullYear()}-${curr.getMonth()+1}-${curr.getDate()+1}`), "desc");
@@ -188,7 +191,7 @@ function GuestBook(props) {
 
     return(
         <div className="guest-book-outer">
-            <label className='guest-book-title'>{LanguageUtil.getMessage('mainPage.guestBook', props.lang)}</label>
+            <label className='guest-book-title'>{LanguageUtil.getMessage('mainPage.guestBook', lang)}</label>
             <div className="guest-book-inner">
                 <div className="guest-book-contents" onClick={clickContents}>{contents}</div>
                 <div className="guest-book-input">

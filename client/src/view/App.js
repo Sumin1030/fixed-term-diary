@@ -29,6 +29,8 @@ import { useState } from 'react';
 import MainPage from './MainPage';
 import Login from './Login';
 import LanguageUtil from "../util/LanguageUtil";
+import { useSelector, useDispatch } from 'react-redux';
+import { languageActions } from '../store/languageSlice';
 // import Calander from '../component/Calendar';
 
 function App() {
@@ -46,14 +48,19 @@ function App() {
     return MAIN;
   }
 
+  const dispatch = useDispatch();
+  const langState = useSelector(state => state.language.lang);
+
   // 두 번째 인자에 빈 배열로 넣으면 처음 렌더링 시에만 함수 호출됨.
   useEffect(()=> {
       axios.get(`/api/isLogined`).then((res) => {
-        console.log('isLogined Response', res.data.isLogined)
+        console.log('isLogined Response', res.data.isLogined);
+        console.log('lang', res.data.lang, 'state', langState);
         // 세션에 language 초기값 저장
-        const lang = LanguageUtil.getLangObj(res.data.lang);
+        const lang = res.data.lang;
+        if(langState != lang && langState != lang?.val ) dispatch(languageActions.changeLang(LanguageUtil.getLangObj(lang)));
         if(isLogined == 'enter') {
-          setContent(getMain(lang));
+          setContent(getMain());
         }
         else if(res && !res.data.isLogined) {
           setContent(LOGIN);
