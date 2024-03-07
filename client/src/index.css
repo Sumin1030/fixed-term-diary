@@ -1,8 +1,13 @@
+@font-face {
+  font-family: 'DOSGothic';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_eight@1.0/DOSGothic.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+  font-family: 'DOSGothic';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -18,11 +23,6 @@ html, body {
 
 .app {
   position: fixed;
-}
-
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
 }
 
 .main {
@@ -72,7 +72,6 @@ code {
 .info {
   display: flex;
   flex-direction: column;
-  font-family: 'Courier New', Courier, monospace;
   color: gray;
   width: calc(100% - 20px);
   height: calc(100% - 20px);
@@ -80,12 +79,23 @@ code {
   background-color: rgb(14, 14, 14);
 }
 
+.info .d-day{
+  font-family: 'Courier New', Courier, monospace;
+}
+.info-title{
+  height: 1.5%;
+ }
+
 .info-time {
-  height: 40%;
+  height: 50%;
 }
 
-.visitor, .grass {
-  height: 30%;
+.visitor {
+  height: 25%;
+}
+
+.grass {
+  height: 23.5%;
 }
 
 .grass {
@@ -95,7 +105,7 @@ code {
 }
 
 .curr-time {
-  height: 65%;
+  height: 40%;
 }
 
 .curr-time>* {
@@ -107,14 +117,15 @@ code {
   justify-content:space-around;
 }
 
-.left-time, .curr-time>*, .visitor, .grass {
-  border-top: 0.1px solid gray;
-}
-
 .seoul-time>*, .toronto-time>* {
   height: 50%;
 }
 
+.left-time, .info-time, .curr-time>*, .visitor, .grass {
+  border-top: 0.1px solid gray;
+}
+
+/* 
 .left-time {
   display: flex;
   flex-direction: column;
@@ -152,19 +163,20 @@ code {
   font-weight: bold;
   display: flex;
   align-items: center;
-}
+} */
 
 .time-title {
-  color: rgb(77, 77, 77);
-  font-weight: bold;
-  font-size: 2rem;
+  /* color: rgb(77, 77, 77); */
+  color: green;
+  /* font-weight: bold; */
+  font-size: 1.9vw;
   display: flex;
   align-items: center;
 }
 
 .today-time {
   color: gray;
-  font-size: 2.5rem;
+  font-size: 2.1vw;
   font-weight: normal;
 }
 
@@ -184,6 +196,84 @@ code {
 .guest-book {
   background-color: green;
 } */
+
+/*
+**************** DateTime ****************
+*/
+.d-day {
+  height: 60%;
+  display: flex;
+  flex-direction: column;
+}
+
+.d-day .country {
+  /* font-size: 16pt; */
+  font-size: 0.65vw;
+  font-weight: bold;
+  height: 60%;
+  color: rgb(255, 1, 107);
+}
+
+.d-day .date {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  width: 73%;
+}
+
+.d-day .date * {
+  font-size: 0.9vw;
+  /* font-size: 0.48vw; */
+  font-weight: bold;
+}
+.d-day .date .d {
+  width: 19%;
+}
+.d-day .date .plus {
+  width: 17%;
+}
+.d-day .date .num {
+  width: 20%;
+  text-align: center;
+}
+.d-day .date .num.num1 {
+  width: 17%;
+}
+/* 3d
+.d-day .date .d {
+  font-size: 0.48vw;
+}
+
+.d-day .date .num {
+  font-size: 0.41vw;
+  margin-left: 7px;
+}
+.d-day .date .num1 {
+  margin-right: 0.35vw;
+}
+// .d-day .date .num4 {
+//  font-size: 6pt;
+// } 
+.d-day .date .num5 {
+  font-size: 0.37vw;
+}
+*/
+
+.d-day .secondRow {
+  display: flex;
+  height: 40%;
+}
+
+.d-day .secondRow .flag {
+  width: 27%;
+  font-size: 0.12vw;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  /* color: rgb(173, 177, 242); */
+  color: white;
+}
+
 
 /*
 **************** MainPage ****************
@@ -207,6 +297,61 @@ code {
   min-height: 100%;
   display: grid;
   grid-template-rows: 1.5fr 1fr;
+  position: relative;
+}
+
+.main-setting {
+  position: absolute;
+  display: flex;
+  justify-content: end;
+  padding: 5px;
+  padding-right: 10px;
+  padding-left: 10px;
+  color: gray;
+  width: calc(100% - 20px);
+  height: 20px;
+}
+
+.lang {
+  width: auto;
+}
+
+.lang:hover {
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.main-center {
+  display: flex;
+  flex-direction: column;
+}
+
+@keyframes box-ani {
+	from {
+		transform: translate(0, 0);
+	}
+	to {
+		transform: translate(7vw, 0);
+	}
+}
+.from-host {
+  height: 30%;
+  color: green;
+  font-size: 6vw;
+  /* font-family:'Courier New', Courier, monospace; */
+  position: relative;
+}
+
+.host-msg, .txt {
+  width: auto;
+  height: auto;
+  position: absolute;
+  animation: box-ani 2s linear alternate infinite;
+}
+
+.host-msg:hover{
+  animation-play-state: paused;
+  font-weight: bold;
 }
 
 .logout-btn {
@@ -216,6 +361,9 @@ code {
   margin: 10px;
   background-color: green;
   border-radius: 9%;
+  position: absolute;
+  right: 1%;
+  bottom: 1%;
 }
 
 .logout-btn:hover {
@@ -282,7 +430,7 @@ code {
 .login-top-bar-text {
   width: calc(100% - 60px);
   color: rgb(176, 176, 176);
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  /* font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif; */
   font-size: 11pt;
   font-weight: bolder;
   margin-right: 60px;
@@ -301,7 +449,7 @@ code {
 .written-text {
   height: auto;
   color: green;
-  font-family: 'Courier New', Courier, monospace;
+  /* font-family: 'Courier New', Courier, monospace; */
   font-size: 12pt;
   font-weight: bold;
   white-space: pre-line;
@@ -312,7 +460,7 @@ code {
   border: none;
   background-color: rgb(27, 27, 27);
   color: green;
-  font-family: 'Courier New', Courier, monospace;
+  font-family: 'DOSGothic';
   font-size: 12pt;
   font-weight: bold;
   padding: 0;
@@ -320,7 +468,7 @@ code {
 
 .title {
   color: green;
-  font-family: 'Courier New', Courier, monospace;
+  /* font-family: 'Courier New', Courier, monospace; */
   font-size: 12pt;
   font-weight: bold;
   width: auto;
@@ -353,43 +501,54 @@ code {
 /*
 ******************* label ******************
 */
-.label {
-  font-family: 'Courier New', Courier, monospace;
-}
+/* .label { */
+  /* font-family: 'Courier New', Courier, monospace; */
+/* } */
 
 /*
 **************** Calendar ****************
 */
 .calendar {
-  /* overflow: scroll; */
-  height: auto;
-  width: auto;
+  /* overflow: scroll;
+  height: 100%;
+  width: 100%; */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* text-align: center; */
+  font-size: 0.8vw;
 }
 .calendar table {
-  border-spacing: 5.3px;
-  /* width: max-content; */
+  border-spacing: 0.27vw;
+  width: 95%;
+  height: 43%;
 }
 
 .calendar .td.date {
   background-color: rgb(59, 59, 59);
 }
 
-.calendar .tbody .tr {
-  height: 5px;
+.calendar .tbody{
+  height: 75%;
+  width: 100%;
 }
 
-.calendar .thead .tr {
-  height: 25px;
+.calendar .thead{
+  height: 25%;
+  width: 100%;
 }
 
 .calendar .thead .td, .calendar .tbody .td {
-  width: 5px;
   padding: 0;
 }
 
-.calendar .tbody .td.first {
+.calendar .td.first {
   /* DayLabelShort: true일 때는 35px */
-  width: 15px;
+  width: 4%;
+}
+
+.calendar .td.first.day {
+  width: 1%;
 }
 
 .calendar .tbody .day {
@@ -407,7 +566,7 @@ code {
   background-color: rgb(58, 58, 58);
   color: white;
   font-size: 13pt;
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  /* font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif; */
   font-weight: normal;
   padding: 7px;
   border-radius: 7px;
@@ -464,30 +623,40 @@ code {
   flex-direction: column;
 }
 
+.guest-book-title {
+  height: 4%;
+}
+
 .guest-book-inner {
+  height: calc(100% - 25px);
   /* background-color: white; */
   background-color: rgb(14, 14, 14);
   border-top: 0.1px solid gray;
   /* margin: 10px;
   width: calc(100% - 20px);
   height: calc(100% - 20px); */
-
 }
 
 .guest-book-contents {
   width: auto;
-  height: calc(100% - 28px);
+  height: 93%;
+  /* height: calc(100% - 28px); */
   max-height: calc(100% - 28px);
   display: flex;
   flex-direction: column;
   overflow: scroll;
-  
+  font-size: 0.7vw;
 }
 
 .guest-book-input {
   width: auto;
-  height: 28px;
+  height: 7%;
 }
+
+.guest-book-input .input-text {
+  height: 100%;
+}
+
 /* login input도 적용됨 */
 .input-text:focus {
   outline: none;
@@ -514,8 +683,8 @@ code {
   border-top: 1px solid white;
 }
 .gb-date {
-  width: 137px;
-  min-width: 137px;
+  width: 20%;
+  min-width: 20%;
   margin-right: 8px;
 }
 .gb-depth {
@@ -552,15 +721,10 @@ code {
 }
 .gb-content {
   width: auto;
-  max-width: 55%;
+  max-width: 63%;
   height: auto;
   color: green;
 }
-
-
-
-
-
 
 /*
 ************* Users *************
@@ -568,20 +732,86 @@ code {
 .users {
   display: flex;
   flex-direction: column;
+  overflow-y: scroll;
+  height: 70%;
 }
 
-.userComp {
+.user {
   display: flex;
   flex-direction: row;
-  color: white;
+  color: rgb(157, 157, 157);
+  height: auto;
+  width: 100%;
+  font-size: 1vw;
+}
+
+.user * {
+  margin-left: 5px;
+  padding: 7px;
+  width: calc(100% - 14px);
   height: auto;
 }
 
-.userComp:hover {
-  font-weight: bold;
-  cursor: pointer;
+.user-message {
+  width: 35%;
 }
 
+.user .user-date {
+  width: 35%;
+  border-right: 1px solid white;
+  margin-right: 3px;
+}
+
+.user .user-name {
+  width: 30%;
+  padding-left: 12px;
+  border-left: 2px solid green;
+  border-right: 2px solid green;
+}
+
+.user-title {
+  font-size: 1.3vw;
+  color: rgb(78, 76, 76);
+}
+
+.user:not(.user-title):hover {
+  font-weight: bold;
+  cursor: pointer;
+  background-color: rgb(61, 61, 61);
+}
+
+.user.master:hover *{
+  position: relative;
+  animation: anime_textup 1.5s infinite;
+}
+.user.master div:nth-of-type(1) {
+    /* animation-delay: .1s; */
+}
+
+.user.master div:nth-of-type(2) {
+    animation-delay: .1s;
+}
+
+.user.master div:nth-of-type(3) {
+    animation-delay: .2s;
+}
+
+@keyframes anime_textup { 0% { top: 0; } 20% { top: -0.4rem; } 40% { top: 0 } 60% { top: 0 } 80% { top: 0 } 100% { top: 0 } }
+@keyframes bounce {
+  100% {
+    top: -20px;
+    text-shadow: 0 1px 0 #CCC,
+                 0 2px 0 #CCC,
+                 0 3px 0 #CCC,
+                 0 4px 0 #CCC,
+                 0 5px 0 #CCC,
+                 0 6px 0 #CCC,
+                 0 7px 0 #CCC,
+                 0 8px 0 #CCC,
+                 0 9px 0 #CCC,
+                 0 50px 25px rgba(0, 0, 0, .2);
+  }
+}
 
 
 
@@ -599,17 +829,18 @@ code {
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  z-index: 1;
 }
 
 .close-btn {
-  height: auto;
-  width: 20px;
-  margin-left: calc(98.5% - 20px);
+  position: absolute;
+  right: 0.7vw;
+  top: 1vw;
+  height: 1.3vw;
+  width: 1.3vw;
   border: none;
-  color: white;
   background-color: transparent;
   padding: 0;
-  font-size: 1.5rem;
 }
 
 .close-btn:hover {
@@ -635,19 +866,30 @@ code {
   flex-direction: column;
   border: 1px solid gray;
   margin: 10px;
-  width: calc(30% - 20px);
+  width: calc(20% - 10px);
   height: calc(100% - 20px);
+  border-top-right-radius: inherit;
+  border-bottom-right-radius: inherit;
 }
 
 .comment-list {
   display: flex;
   flex-direction: column;
-  height: 95%;
+  height: 93%;
   overflow: scroll;
 }
 
 .comment-input {
-  height: 5%;
+  height: 7%;
+}
+
+.comment-input .input-text{
+  padding: 5px;
+  padding-left: 10px;
+  padding-right: 10px;
+  width: calc(100% - 20px);
+  height: calc(100% - 10px);
+
 }
 
 .posting-list {
@@ -656,7 +898,9 @@ code {
   height: auto;
   border: 1px solid gray;
   margin: 10px;
-  width: calc(30% - 20px);
+  width: calc(20% - 20px);
+  border-top-left-radius: inherit;
+  border-bottom-left-radius: inherit;
 }
 .blog-list {
   height: auto;
@@ -672,12 +916,21 @@ code {
 }
 
 .blog-posting {
-  padding: 10px;
+  padding: 20px;
   border: 1px solid gray;
   margin-top: 10px;
   margin-bottom: 10px;
   color: green;
-  height: calc(100% - 40px);
+  height: calc(100% - 60px);
+  width: calc(60% - 40px);
+  overflow-y : scroll;
+}
+
+.blog-title {
+  height: auto;
+  color: green;
+  font-size: 50px;
+  margin-top: 30px;
 }
 
 .selected-post {
@@ -708,8 +961,193 @@ code {
   cursor: pointer;
 }
 
-.blog-write .input-text{
+.posting-text {
+  height: auto;
+}
+
+
+/*
+************* BlogWrite *************
+*/
+
+/* .blog-write .input-text{
   width: calc(100% - 20px);
   height: calc(100% - 20px);
   padding: 10px;
+} */
+
+.blog-write {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid gray;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  width: 60%;
+  height: calc(100% - 20px);
+}
+
+.blog-write-area {
+  width: calc(100% - 20px);
+  height: calc(70% - 20px);
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  /* border: 1px solid gray; */
+}
+
+.blog-write-title {
+  height: auto;
+}
+
+.blog-write-button {
+  width: calc(100% - 20px);
+  height: calc(10% - 20px);
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content:space-between;
+  padding: 10px;
+}
+
+.upload-image {
+  padding: 10px;
+  padding-bottom: 0;
+  width: calc(100% - 20px);
+  height: calc(10% - 10px);
+}
+
+.upload-image > * {
+  background-color: rgba(41, 42, 42, 0.443);
+  text-align: center;
+  font-size: 1.3vw;
+  line-height: 2rem;
+  color: rgba(0, 128, 0, 0.763);
+}
+
+.blog-write-button > *{
+  background-color: rgba(41, 42, 42, 0.443);
+  width: calc(50% - 5px);
+  text-align: center;
+  font-size: 1.3vw;
+  line-height: 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: rgba(0, 128, 0, 0.763);
+}
+
+/* .blog-write-button > .btn {
+  height: 15%;
+} */
+
+/* .blog-write-button .add-textarea {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+} */
+
+.blog-write-button *:hover, .upload-image:hover .upload-image-box{
+  cursor:pointer;
+  background-color: rgba(76, 77, 77, 0.443);
+  font-weight: bold;
+}
+
+.blog-write-title-input {
+  min-height: calc(2vw - 60px);
+  font-size: 1.6vw;
+  padding: 15px;
+  padding-top: 30px;
+  padding-bottom: 30px;
+  max-width: calc(100% - 30px);
+  resize: none;
+  overflow-y: hidden;
+}
+
+.blog-write-content-input {
+  background-color: black;
+  min-height: 2vw;
+  font-size: 0.9vw;
+  padding: 5px;
+  max-width: calc(100% - 10px);
+  resize: none;
+  overflow-y: hidden;
+}
+
+.blog-write-content {
+  overflow: scroll;
+}
+
+/*
+************* UploadImage *************
+*/
+.upload-image {
+  position: relative;
+  height: 20%;
+}
+
+/* .upload-image-box:hover {
+  background-color: rgba(146, 146, 146, 0.276);
+} */
+
+.upload-image:hover .blog-text-area-delete {
+  display: block;
+  cursor: pointer;
+}
+
+.upload-image-box {
+  /* height: 10vw; */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* font-size: 1vw; */
+  /* background-color: rgb(16, 16, 16); */
+}
+
+.upload-image-input {
+  display: none;
+}
+
+.upload-image-preview {
+  height: auto;
+}
+
+.image-preview {
+  width: 60%;
+  height: auto;
+  position: relative;
+}
+
+/*
+************* BlogWriteTextArea *************
+*/
+.blog-text-area {
+  position: relative;
+  height: auto;
+  margin-top: 5px;
+}
+
+.blog-text-area-delete {
+  position: absolute;
+  width: 1vw;
+  height: 1vw;
+  display: none;
+  right: 0.1vw;
+  text-align: center;
+  padding: 5px;
+  margin-top: 0.3%;
+}
+
+.image-preview .blog-text-area-delete {
+  background-color: rgba(0, 0, 0, 0.479);
+}
+
+
+.blog-text-area:hover .blog-text-area-delete,
+.image-preview:hover .blog-text-area-delete {
+  display: block;
+  cursor: pointer;
+}
+
+.blog-text-area:hover .blog-write-content-input{
+  background-color: rgba(146, 146, 146, 0.276);
 }

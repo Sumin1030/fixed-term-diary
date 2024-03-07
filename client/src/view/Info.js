@@ -4,9 +4,11 @@ import DateUtil from '../util/DateUtil';
 import { useEffect } from 'react';
 import Plotly from "plotly.js-dist";
 import axios from "axios";
+import LanguageUtil from '../util/LanguageUtil';
+import { useSelector } from 'react-redux';
 
-function Info() {
-    
+function Info(props) {
+    const lang = useSelector(state => state.language.lang);
     useEffect(()=>{
         let curr = new Date();
         const todayDate = new Date(DateUtil.getUtc(curr) - (DateUtil.TORONTO_OFFSET * DateUtil.MINUTES_TO_MILLISECONDS));
@@ -46,9 +48,19 @@ function Info() {
             }
             const data = [trace1];
             Plotly.newPlot('myDiv', data, layout, option);
+            window.addEventListener('resize', redrawPlotly);
         });
 
+        return () => {
+            window.removeEventListener('resize', redrawPlotly);
+        }
+
     }, []);
+
+    const redrawPlotly = (e) => {
+        Plotly.relayout('myDiv', {});
+        
+    }
 
     const layout = {
         xaxis: {
@@ -70,7 +82,8 @@ function Info() {
             l: 60,
             r: 30,
             pad: 10
-        }
+        },
+        autosize: true
     };
 
     const option = {
@@ -79,9 +92,9 @@ function Info() {
 
     return(
         <div className="info">
-            information
+            <label className='info-title'>{LanguageUtil.getMessage('mainPage.information', lang)}</label>
             <DateTime />
-            <div className="visitor" id="myDiv">
+            <div className="visitor" id="myDiv" >
             </div>
             <div className="grass">
                 <Calander />

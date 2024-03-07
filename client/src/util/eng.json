@@ -1,0 +1,14 @@
+{
+    "mainPage" : {
+        "information" : "Information",
+        "guestBook" : "GuestBook"
+    },
+    "blog" : {
+        "newPost": "New Post",
+        "comment": "Enter Comment"
+    },
+    "construction" : {
+        "underConstruction" : "UNDER CONSTRUCTION",
+        "commingSoon" : "COMMING SOON,,"
+    }
+}

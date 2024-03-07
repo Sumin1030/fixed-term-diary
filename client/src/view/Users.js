@@ -1,8 +1,9 @@
-import {useRef, useEffect, useState} from 'react';
+import {useEffect, useState} from 'react';
 import axios from 'axios';
 import User from '../component/User';
 import Blog from './Blog';
-function Users() {
+import closeButton from '../resource/images/closeButton.png';
+function Users(props) {
     const [modalSwitch, setModalSwitch] = useState(false);
     const [users, setUsers] = useState([]);
 
@@ -51,8 +52,10 @@ function Users() {
                
             { modalSwitch? (
             <div className="modal">
-                <button className="btn close-btn" onClick={()=>setModalSwitch(false)}>X</button>
-                <Blog />
+                <button className="btn close-btn" onClick={()=>setModalSwitch(false)}>
+                    <img alt="X" src={closeButton} />
+                </button>
+                <Blog/>
             </div>) : null }
         </div>
     );

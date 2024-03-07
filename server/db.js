@@ -31,7 +31,7 @@ const searchID = (id, callback) => {
 const signUp = (info, callback) => {
     if(info.id && info.pw && info.name) {
         info = replaceInfo(info);
-        const query = `INSERT INTO USER VALUES ('${info.id}', '${info.pw}', '${info.name}', '${info.msg}', 0, '${info.date}')`;
+        const query = `INSERT INTO USER(ID, PW, NAME, MSG, CONFIRMED, SIGNUP_DATE) VALUES ('${info.id}', '${info.pw}', '${info.name}', '${info.msg}', 0, '${info.date}')`;
         console.log(query);
         connection.query(query, (err, rows, fields) => {
             // if(err) throw err;
@@ -132,7 +132,7 @@ const getBlogList = (callback) => {
 }
 
 const getBlogComment = (sq, callback) => {
-    const query = `SELECT * FROM BLOG_COMMENT WHERE BLOG_SQ='${sq}'`;
+    const query = `SELECT BC.*, USER.NAME FROM BLOG_COMMENT AS BC JOIN USER ON BC.ID = USER.ID WHERE BLOG_SQ='${sq}'`;
     console.log(query);
     connection.query(query, (err, rows) => {
         callback(rows, err);
@@ -149,13 +149,30 @@ const insertBlogComment = (info, callback) => {
 
 const getPost = (sq, callback) => {
     const query = `SELECT * FROM BLOG WHERE BLOG_SQ='${sq}'`;
+    // const query = `SELECT * FROM POSTING WHERE ID='1'`;
     connection.query(query, (err, rows) => {
         callback(rows, err);
     })
 }
 
+const imgTest = (params, callback) => {
+    // let sql = '';
+    // params.forEach((param) => {
+        // const _sql = `INSERT INTO POSTING VALUES('${param[0]}', '1', '${param[content]');`;
+        // sql += _sql;
+    // });
+
+    console.log(params);
+    const sql = `INSERT INTO BLOG VALUES(?, ?, ?, ?, ?);`;
+    const param = [params.sq, params.date, params.content, params.title, '이 컬럼 삭제필요'];
+    connection.query(sql, param, (err, rows) => {
+        console.log(param, err, rows);
+        callback(param, rows, err);
+    });
+}
+
 module.exports = { 
     test, searchID, signUp, insertVisit, getVisits, 
     getGuestBook, insertGuestBook, getUsers, getBlogList,
-    getBlogComment, insertBlogComment, getPost
+    getBlogComment, insertBlogComment, getPost, imgTest
 };

@@ -1,10 +1,14 @@
+import { useSelector } from "react-redux";
+import LanguageUtil from "../util/LanguageUtil";
 function Construction() {
+
+    const lang = useSelector(state => state.language.lang);
     return (
         <div className="construction-outer">
             <div className="construction-inner">
-                <div>UNDER CONSTRUCTION</div>
+                <div>{LanguageUtil.getMessage('construction.underConstruction', lang)}</div>
                 <br/>
-                <div>comming soon,,</div>
+                <div>{LanguageUtil.getMessage('construction.commingSoon', lang)}</div>
             </div>
         </div>
     );

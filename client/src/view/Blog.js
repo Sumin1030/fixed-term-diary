@@ -2,11 +2,14 @@ import { BlogList, CommentList } from "../component/BlogList";
 import BlogPosting from "../component/BlogPosting";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import BlogWrite from '../component/BlogWrite';
+import LanguageUtil from "../util/LanguageUtil";
 
 let selectedPostDom = null;
-function Blog() {
+function Blog(props) {
     const [blogArr, setBlogArr] = useState([]);
     const [selectedPost, setSelectedPost] = useState(null);
+    const [newPost, setNewPost] = useState(null);
     const onTitleClick = (e, sq) => {
         setSelectedPost(sq);
         changeSelectedPost(e);
@@ -14,11 +17,11 @@ function Blog() {
 
     const changeSelectedPost = (e = null) => {
         // 같은 post 눌렀을 때 새로고침 기능으로 동작하도록 똑같이 다시 불러옴.
-        console.log('selectedPostDom', selectedPostDom);
+        // console.log('selectedPostDom', selectedPostDom);
         if(selectedPostDom) selectedPostDom.classList.remove('selected-post');
         if(e) {
             selectedPostDom = e.currentTarget;
-            console.log('selectedPostDom 바꿈', selectedPostDom);
+            // console.log('selectedPostDom 바꿈', selectedPostDom);
             selectedPostDom.classList.add('selected-post');
         }
     }
@@ -37,8 +40,17 @@ function Blog() {
     }
 
     useEffect(() =>{
+        axios.get('/api/isLogined').then((res) => {
+            if(res.data != "" && res.data.name == 'MASTER') {
+                setNewPost(<BlogList title='new' onClick={() => writeNewPosting()} content={' + '+LanguageUtil.getMessage('blog.newPost', LanguageUtil.kor)} />);
+            }
+        });
         getList();
     }, []);
+
+    useEffect(() => {
+        getList();
+    }, [selectedPost]);
 
     const writeNewPosting = () => {
         setSelectedPost('new');
@@ -48,11 +60,13 @@ function Blog() {
     return (
         <div className="blog">
             <div className='posting-list'>
-                <BlogList title='new' onClick={() => writeNewPosting()} content=' +  New Post' />
+                {newPost}
                 {blogArr}
             </div>
-            <BlogPosting selectedPost={selectedPost}/>
-            <CommentList selectedPost={selectedPost}/>
+            {
+                selectedPost != 'new' ? <BlogPosting selectedPost={selectedPost} /> : <BlogWrite setSelectedPost={setSelectedPost}/>
+            }
+            <CommentList selectedPost={selectedPost} />
         </div>
     );
 }

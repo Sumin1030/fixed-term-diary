@@ -88,6 +88,19 @@ export default {
         const _year = myDate.getFullYear();
         return `${_year}-${_month}-${_date}`;
     },
+    getTimeDiff(start, finish) {
+        const diff = finish-start;
+        const day = Math.floor(diff/(this.DAY_TO_MILLISECONDS));
+        const hour = Math.floor((diff%(this.DAY_TO_MILLISECONDS))/(this.HOUR_TO_MILLISECONDS));
+        const minute = Math.floor((diff%(this.HOUR_TO_MILLISECONDS))/(this.MINUTES_TO_MILLISECONDS));
+        const second = Math.floor((diff%(this.MINUTES_TO_MILLISECONDS))/(this.SECOND_TO_MILLISECONDS));
+        return {
+            day: day,
+            hour: hour,
+            minute: minute,
+            second: second
+        };   
+    },
     addDate(date, numOfDays) {
         return new Date(this.checkDate_time(date) + numOfDays*this.DAY_TO_MILLISECONDS);
     },

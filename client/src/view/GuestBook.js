@@ -2,11 +2,19 @@ import { useRef, useState, useEffect } from 'react';
 import axios from 'axios';
 import DateUtil from '../util/DateUtil';
 import GuestBookContent from '../component/GuestBookContent';
+import LanguageUtil from '../util/LanguageUtil';
+import { useSelector } from 'react-redux';
 
-function GuestBook() {
+// 로그인 했는지 확인 
+// -> 글 등록할 때 확인하려면 모든 코드를 callback에 넣어야 하므로 미리 해놓기.
+// TODO: GuestBook이 아닌 MainPage에서 한 번에 해야할지 검토
+let loginInfo;
+
+function GuestBook(props) {
     const input = useRef(null);
     const selectedContent = useRef(null);
     const [contents, setContents] = useState([]);
+    const lang = useSelector(state => state.language.lang);
 
     const getToday = () => {
         let curr = new Date();
@@ -79,12 +87,36 @@ function GuestBook() {
 
     useEffect(() => {
         getContent();
+        // LoginUtil.isLogined((res)=>{
+        //     if(res && res.data.isLogined) loginInfo = res.data
+        //     console.log("loginInfo: ", loginInfo);
+        // });
+        axios.get(`/api/isLogined`).then((res) => {
+            if(res && res.data.isLogined) loginInfo = res.data;
+            else loginInfo = undefined;
+        });
     }, []);
-
+    let enterFlag = false;
     // 엔터 눌렸는지 확인
     const handleOnKeyPress = (e) => {
+        // console.log("key down", e.key, e.currentTarget.value);
         if(e.key == 'Enter') {
             const val = e.currentTarget.value;
+
+            // 등록하기 적합한 상황인지 check
+            // 한글 입력 시 enter가 두 번 입력되는 오류 -> 두 번째 enter 입력 시 등록 안 함
+            // 로그인이 안 되어 있거나 내용 없는 경우 등록 안 함.
+            if(enterFlag || !val || val == "") {
+                enterFlag = false;
+                e.currentTarget.value = "";
+                return;
+            } else if(typeof loginInfo == 'undefined') {
+                console.log("로그인 안 되어 있음", loginInfo);
+                alert("You have to Sign in");
+                e.currentTarget.value = "";
+                enterFlag = true;
+                return;
+            }
             const data = selectedContent.current? selectedContent.current.data : null;
             const utc = DateUtil.getUtc(new Date());
             const sequence = `SQ_${utc}`;
@@ -95,7 +127,7 @@ function GuestBook() {
                     sq: sequence,
                     content: val,
                     date: DateUtil.getDate(utc, "desc"),
-                    id: 'gjtnals2',
+                    id: loginInfo.userid,
                     depth: Number(data.d)+1,
                     parent: data.p,
                     grandParent: data.gp
@@ -105,7 +137,7 @@ function GuestBook() {
                     sq: sequence,
                     content: val,
                     date: DateUtil.getDate(utc, "desc"),
-                    id: 'gjtnals2',
+                    id: loginInfo.userid,
                     depth: 0,
                     grandParent: sequence
                 }
@@ -115,6 +147,7 @@ function GuestBook() {
                 else console.log('댓글 insert 실패', res);
             });
             e.currentTarget.value = "";
+            enterFlag = true;
         }
     }
 
@@ -158,7 +191,7 @@ function GuestBook() {
 
     return(
         <div className="guest-book-outer">
-            GuestBook
+            <label className='guest-book-title'>{LanguageUtil.getMessage('mainPage.guestBook', lang)}</label>
             <div className="guest-book-inner">
                 <div className="guest-book-contents" onClick={clickContents}>{contents}</div>
                 <div className="guest-book-input">

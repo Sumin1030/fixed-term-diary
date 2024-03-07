@@ -4,8 +4,9 @@ import DateUtil from '../util/DateUtil';
 // info: 회원가입 시 정보 저장 위함.
 //       정보 가입할 때 마다 함수 실행하기 때문에 전역변수로 설정.
 // loginPw: 로그인 시 아이디 정보 불러오는 시점에 미리 비밀번호 저장하기 위함.
-// loginId: 로그인 성공 시 방문자 수 기록하기 위함
-let info = {}, loginId, loginPw;
+// loginId: 로그인 성공 시 방문자 수 기록하기 위함.
+// loginName: 로그인 성공 시 세션에 name 저장하기 위함.
+let info = {}, loginId, loginPw, loginName;
 function Login(props) {
 
     const sayHi = `Hi. this is fixed-term diary made by Sumin.
@@ -53,11 +54,11 @@ function Login(props) {
         });
     }
 
-    // 로그인 성공
-    const signIn = (info) => {
-        console.log("Login.signIn");
+    // 로그인 
+    const signIn = (info, isEnter = false) => {
+        const result = isEnter? 'enter' : true;
         axios.post(`/api/signIn`, info).then((res) => {
-            props.changeState(true);
+            props.changeState(result);
         });
     }
     
@@ -132,6 +133,7 @@ function Login(props) {
                         if (res.data.result.length > 0) {
                             setTitle(PW);
                             loginPw = res.data.result[0].PW;
+                            loginName = res.data.result[0].NAME;
                         } else {
                             changeCurrentText("no such ID", false);
                         }   
@@ -155,7 +157,7 @@ function Login(props) {
                 }
                 addVisit(info);
                 setFixedText(`${fixedText} \n Ready to start..`);
-                signIn({...info, pw: loginPw});
+                signIn({...info, pw: loginPw, name: loginName});
             } else {
                 setFixedText(`${fixedText} \n Incorrect Password.`);
             }
@@ -175,7 +177,8 @@ function Login(props) {
 
     // 둘러보기 버튼 클릭
     const clickEnter = (e) => {
-        props.changeState('enter');
+        const isEnter = true;
+        signIn({enter: true}, isEnter);
     }
 
     useEffect(() => {
